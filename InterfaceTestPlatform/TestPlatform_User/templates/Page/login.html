@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>登录</title>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="{% static '/css/layui.css' %}">
+    <style type="text/css">
+        html body{
+            height: 100%;
+            padding: 1px;
+        }
+        .center {
+            /*position: fixed;*/
+            position: relative;
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-left: 0;
+            margin-right: 0;
+            /*left: 50%;*/
+            /*margin: 0px 0 0 0px;*/
+        }
+    </style>
+</head>
+<body>
+
+<div class="center" style="text-align: center; ">
+    <h1>登录</h1>
+    <form action="" method="post" class="layui-form layui-form-pane">
+        {% csrf_token %}
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" required lay-verify="required" lay-verType="tips"
+                           placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="password" required lay-verify="required" lay-verType="tips"
+                           placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-show-sm-inline-block">
+                <div class="layui-form-mid layui-word-aux">{{error}}</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn layui-btn-radius" type="submit">登 录</button>
+            　　　　　　
+            <a href="{%url 'TestPlatform_User:Register'%}">
+                <button class="layui-btn layui-btn-radius" type="button">注 册</button>
+            </a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

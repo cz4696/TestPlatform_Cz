@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load  static %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="{% static '/css/layui.css' %}">
+</head>
+<body>
+<ul class="layui-nav layui-bg-green">
+    <li class="layui-nav-item"><a href="">导航</a></li>
+    {% if user.is_anonymous%}<!--authenticated过去式才能代表以登录-->
+    <li class="layui-nav-item"><a href="{%url 'TestPlatform_User:Login'%}">登录</a></li>
+    {% else %}
+    <li class="layui-nav-item"><a href="{%url 'TestPlatform_User:Register'%}">去注册！</a></li>
+    <li class="layui-nav-item"><a href="{%url 'TestPlatform_User:Logout'%}">登出</a></li>
+    {% endif %}
+    <li class="layui-nav-item">
+        <a href="javascript:;">xxx</a>
+        <dl class="layui-nav-child">
+            <dd><a href="">xxx</a></dd>
+            <dd><a href="">xxx</a></dd>
+            <dd><a href="">xxx</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item"><a href="">社区</a></li>
+</ul>
+<h1>主页</h1>
+
+
+</body>
+</html>
