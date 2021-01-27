@@ -12,7 +12,7 @@
 <form action="" method="post">
     <h1>注册</h1>
     {% csrf_token %}
-    <a href="{% url 'TestPlatform_User:Page'%}">返回到登录界面！</a>
+    <a href="{% url 'TestPlatform_User:Login'%}">返回到登录界面！</a>
     <p>
         <label for="id_username">用户名:</label>
         <input type="text" name="username" maxlength="150" autofocus required id="id_username">
@@ -37,8 +37,6 @@
     <!--Django自带功能表单-->
 
 </form>
-<script>
-</script>
 
 </body>
 </html>

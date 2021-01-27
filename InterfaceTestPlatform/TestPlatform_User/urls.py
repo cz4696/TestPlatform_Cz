@@ -4,9 +4,8 @@ from . import views
 
 app_name = 'TestPlatform_User' # 声明app
 urlpatterns = [
-    path('', views.Home, name='Page'),
-    path('login/', views.Login, name='Login'),
+    path('home/', views.Home, name='Home'),
+    path('', views.Login, name='Login'),
     path('logout/', views.Logout, name='Logout'),
     path('register/', views.Register, name='Register'),
-
 ]

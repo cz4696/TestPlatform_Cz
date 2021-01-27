@@ -114,7 +114,11 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/' # 别名
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
 # 正常引用css
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    ("css",os.path.join(STATIC_ROOT,'css')),
+    ("js",os.path.join(STATIC_ROOT,'js')),
+    ("font",os.path.join(STATIC_ROOT,'font')),
+
 ]
