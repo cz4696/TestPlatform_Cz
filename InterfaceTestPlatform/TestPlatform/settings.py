@@ -45,7 +45,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'TestPlatform.urls'
@@ -73,8 +73,12 @@ WSGI_APPLICATION = 'TestPlatform.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db_testplatform',
+        'HOST': '127.0.0.1',
+        'PORT': 3306,
+        'USER': 'root',
+        'PASSWORD': '123456',
     }
 }
 
@@ -113,12 +117,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 
-STATIC_URL = '/static/' # 别名
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_URL = '/static/'  # 别名
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # 正常引用css
 STATICFILES_DIRS = [
-    ("css",os.path.join(STATIC_ROOT,'css')),
-    ("js",os.path.join(STATIC_ROOT,'js')),
-    ("font",os.path.join(STATIC_ROOT,'font')),
+    ("css", os.path.join(STATIC_ROOT, 'css')),
+    ("js", os.path.join(STATIC_ROOT, 'js')),
+    ("font", os.path.join(STATIC_ROOT, 'font')),
 
 ]
