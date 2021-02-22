@@ -118,7 +118,7 @@ def Add_Pj(request):  # 添加部门信息
         return HttpResponse()
 
 
-def uploadGrade(request):
+def uploadtest(request):
     if request.method == 'POST':
         f = request.FILES.get('file')
         excel_type = f.name.split('.')[1]

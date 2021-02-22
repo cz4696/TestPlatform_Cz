@@ -65,7 +65,7 @@
 
         <div style="margin-left: 200px;">
             <div style="padding: 20px; background-color: #F2F2F2;">
-                <form action="{% url 'TestPlatform_User:uploadGrade' %}" method="post"
+                <form action="{% url 'TestPlatform_User:uploadtest' %}" method="post"
           enctype="multipart/form-data">
                 <button type="button" class="layui-btn" id="test3" name="file"><i class="layui-icon"></i>上传文件</button>
                 <input type="file" style="width: 50%" name="file" id="filename">
@@ -85,7 +85,6 @@
                             <th lay-data="{field:'in_expected_result', sort: true, align: 'right'}">预期结果</th>
                             <th lay-data="{field:'in_actual_result', sort: true, minWidth: 100, align: 'right'}">实际结果
                             <th lay-data="{fixed: 'right', width:250, align:'center', toolbar: '#barDemo'}">操作</th>
-                            </th>
                         </tr>
                         <script type="text/html" id="barDemo">
                         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>

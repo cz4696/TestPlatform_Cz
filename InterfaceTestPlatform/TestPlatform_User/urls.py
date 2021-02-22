@@ -14,6 +14,6 @@ urlpatterns = [
     path('add/', views.post),
     path('add_project/', views.Add_Project, name='Add_Project'),
     path('add_pj/', views.Add_Pj, name='Add_Pj'),
-    path('uploadGrade/', views.uploadGrade, name='uploadGrade'),
+    path('uploadtest/', views.uploadtest, name='uploadtest'),
     # path('interface_list/', views.Interface_List, name='Interface_List'),
 ]
