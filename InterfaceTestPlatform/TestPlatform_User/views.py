@@ -145,7 +145,7 @@ def uploadGrade(request):
                                                        in_expected_result=in_expected_result,
                                                        in_actual_result=in_actual_result)
                         add_interface.save()
-                        return HttpResponse()
+                        # return HttpResponse()
             except:
                 logger.error('解析excel文件或者数据插入错误')
             return render(request, 'Page/Interface_List.html', {'message': '导入成功'})
