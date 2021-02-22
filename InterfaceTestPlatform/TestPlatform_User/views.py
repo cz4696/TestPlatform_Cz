@@ -1,16 +1,18 @@
+from venv import logger
+
+from django.db import transaction
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
 from django.contrib.auth import authenticate, login, logout  # 从app导入
 from django.contrib.auth.forms import UserCreationForm  # 自带创建用户表单，注册
 import xlrd, xlwt, json, sys
 import requests
-from . import Import_Excel
-from .models import Project_Date
+from . import Import_Excel, models
+from .models import Project_Data, Interface_Data
+import datetime, time
 
 
 # Create your views here.
-
-
 def Home(request):  # 首页
     return render(request, 'Page/Home.html')
 
@@ -103,16 +105,50 @@ def Add_Project(request):  # 点击新增跳转出页面
     return render(request, 'Page/Add_Project.html')
 
 
-def add_pj(request):  # 添加部门信息
+def Add_Pj(request):  # 添加部门信息
     if request.method == 'POST':
         pj_id = request.POST.get('pj_id')
         pj_name = request.POST.get('pj_name')
         pj_pname = request.POST.get('pj_pname')
         pj_tname = request.POST.get('pj_tname')
         pj_state = request.POST.get('pj_state')
-        add_project = Project_Date(pj_id=pj_id, pj_name=pj_name, pj_pname=pj_pname, pj_tname=pj_tname,
+        add_project = Project_Data(pj_id=pj_id, pj_name=pj_name, pj_pname=pj_pname, pj_tname=pj_tname,
                                    pj_state=pj_state)
         add_project.save()
         return HttpResponse()
 
 
+def uploadGrade(request):
+    if request.method == 'POST':
+        f = request.FILES.get('file')
+        excel_type = f.name.split('.')[1]
+        if excel_type in ['xlsx', 'xls']:
+            # 开始解析上传的excel表格
+            wb = xlrd.open_workbook(filename=None, file_contents=f.read())
+            table = wb.sheets()[0]
+            rows = table.nrows  # 总行数
+            data_list = []  # 获取表中数据
+            try:
+                for i in range(rows):
+                    if i != 0:
+                        data_list.append(table.row_values(i))
+                        in_id = data_list[i - 1][0]
+                        in_mname = data_list[i - 1][1]
+                        in_type = data_list[i - 1][2]
+                        in_url = data_list[i - 1][3]
+                        in_data = data_list[i - 1][4]
+                        in_tname = data_list[i - 1][5]
+                        in_expected_result = data_list[i - 1][6]
+                        in_actual_result = data_list[i - 1][7]
+                        add_interface = Interface_Data(in_id=in_id, in_mname=in_mname, in_type=in_type, in_url=in_url,
+                                                       in_data=in_data, in_tname=in_tname,
+                                                       in_expected_result=in_expected_result,
+                                                       in_actual_result=in_actual_result)
+                        add_interface.save()
+                        return HttpResponse()
+            except:
+                logger.error('解析excel文件或者数据插入错误')
+            return render(request, 'Page/Interface_List.html', {'message': '导入成功'})
+        else:
+            logger.error('上传文件类型错误！')
+            return render(request, 'Page/Interface_List.html', {'message': '导入失败'})

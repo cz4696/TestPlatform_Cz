@@ -13,6 +13,7 @@ urlpatterns = [
     path('interface_perform/', views.Interface_Perform, name='Interface_Perform'),
     path('add/', views.post),
     path('add_project/', views.Add_Project, name='Add_Project'),
-    path('add_pj/', views.add_pj, name='Add_Pj'),
+    path('add_pj/', views.Add_Pj, name='Add_Pj'),
+    path('uploadGrade/', views.uploadGrade, name='uploadGrade'),
     # path('interface_list/', views.Interface_List, name='Interface_List'),
 ]

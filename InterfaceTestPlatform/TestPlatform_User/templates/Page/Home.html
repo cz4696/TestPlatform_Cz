@@ -29,6 +29,12 @@
                         <dd><a href="{%url 'TestPlatform_User:Logout'%}">登出</a></dd>
                     </dl>
                 </li>
+                <li style="margin:12px;float: right">
+                    <div style="margin-left: 30px;">
+                        <input type="hidden" name="color" value="" id="test-all-input">
+                        <div id="test-all"></div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
@@ -63,6 +69,8 @@
         </div>
         <div style="margin-left: 200px;">
             <div style="padding: 20px; background-color: #F2F2F2; ">
+                <div style="font-size:30px;margin-bottom:15px;font-family: 'JetBrains Mono'" id='time' class="layui-card-body">
+                </div>
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <div class="layui-card">
@@ -98,10 +106,7 @@
                     </div>
                     <div class="layui-col-md12">
                         <div class="layui-card">
-                            <div class="layui-card-header">首页内容</div>
-                            <div class="layui-card-body">
-                                待定
-                            </div>
+                            <div class="layui-card-header">页面</div>
                             <div class="layui-card-body">
                                 待定
                             </div>
@@ -158,7 +163,7 @@
 {% load static %}
 <script src="{% static '/js/layui.js' %}" charset="utf-8"></script>
 
-<script>
+<script type="text/javascript">
     layui.use('element', function () {
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
         //监听导航点击
@@ -167,6 +172,51 @@
             layer.msg(elem.text());
         });
     });
+    layui.use('colorpicker', function () {
+        var $ = layui.$
+            , colorpicker = layui.colorpicker;
+        //常规使用
+        colorpicker.render({
+            elem: '#test1' //绑定元素
+            , change: function (color) { //颜色改变的回调
+                layer.tips('选择了：' + color, this.elem, {
+                    tips: 1
+                });
+            }
+        });
+        colorpicker.render({
+            elem: '#test-all'
+            , color: 'rgba(7, 155, 140, 1)'
+            , format: 'rgb'
+            , predefine: true
+            , alpha: true
+            , done: function (color) {
+                $('#test-all-input').val(color); //向隐藏域赋值
+                layer.tips('给指定隐藏域设置了颜色值：' + color, this.elem);
+
+                color || this.change(color); //清空时执行 change
+            }
+            , change: function (color) {
+                //给当前页面头部和左侧设置主题色
+                $('.header-demo,.layui-side .layui-nav').css('background-color', color);
+            }
+        });
+    });
+
+    function time() {
+        var monthEnglish;
+        monthEnglish = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Spt", "Oct", "Nov", "Dec"]
+        var date = new Date();
+        year = date.getFullYear();
+        month = date.getMonth();
+        day = date.getDate();
+        hours = date.getHours();
+        minutes = date.getMinutes();
+        seconds = date.getSeconds();
+        document.getElementById("time").innerHTML = monthEnglish[month] + "\t\t" + day + "\t\t" + hours + ":" + minutes + ":" + seconds + "\t\t" + year;
+
+    };
+    setInterval("time()", 1000);
 </script>
 </body>
 </html>
