@@ -66,14 +66,17 @@
         <div style="margin-left: 200px;">
             <div style="padding: 20px; background-color: #F2F2F2;">
                 <form action="{% url 'TestPlatform_User:uploadtest' %}" method="post"
-          enctype="multipart/form-data">
-                <button type="button" class="layui-btn" id="test3" name="file"><i class="layui-icon"></i>上传文件</button>
-                <input type="file" style="width: 50%" name="file" id="filename">
-        <button class="btn btn-primary-outline radius size-S" type="submit">提交</button>
+                      enctype="multipart/form-data">
+                    <button type="button" class="layui-btn" id="test3" name="file"><i class="layui-icon"></i>上传文件
+                    </button>
+                    <input type="file" style="width: 50%" name="file" id="filename">
+                    <button class="btn btn-primary-outline radius size-S" type="submit">提交</button>
                 </form>
                 <div class="page-container">
                     <table class="layui-table"
-                           lay-data="{ id:'idTest', page: true, limit:30, url:'/api/get_inter_data/'}" lay-filter="demo">
+                           lay-data="{ id:'idTest', page: true, limit:10, url:'/api/get_inter_data/',toolbar: true,response: {
+                statusCode: 200
+            }}" lay-filter="demo">
                         <thead>
                         <tr>
                             <th lay-data="{type:'checkbox'}">ID</th>
@@ -87,10 +90,10 @@
                             <th lay-data="{fixed: 'right', width:250, align:'center', toolbar: '#barDemo'}">操作</th>
                         </tr>
                         <script type="text/html" id="barDemo">
-                        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-                        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-                    </script>
+                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+                            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                        </script>
                         </thead>
                     </table>
                 </div>
@@ -128,7 +131,7 @@
             }
         });
     });
-   layui.use('table', function () {
+    layui.use('table', function () {
         var table = layui.table;
         //监听表格复选框选择
         table.on('checkbox(demo)', function (obj) {

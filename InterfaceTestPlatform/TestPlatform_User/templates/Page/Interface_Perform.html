@@ -63,62 +63,61 @@
         </div>
         <div style="margin-left: 200px;">
             <div style="padding: 20px; background-color: #F2F2F2;">
-                <form action="{%url 'TestPlatform_User:Interface_Perform'%}" method="post">
-                    {% csrf_token %}
-                    <table>
-                        <tr>
-                            <td>接口地址：</td>
-                            <td>
-                                <input type="text" name="url"/> <br/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>选择方法:</td>
-                            <td>
-                                <input type="radio" name="fun" value="post" checked/>POST
-                                <input type="radio" name="fun" value="get"/>GET
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>参数类型：</td>
-                            <td>
-                                <select name="leixin">
-                                    <option value="json">Json</option>
-                                    <option value="xml">XML</option>
-                                    <option value="date">Data</option>
+                <form class="layui-form layui-form-pane" action="{%url 'TestPlatform_User:Interface_Perform'%}"
+                      method="post">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">接口地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" autocomplete="off" placeholder="请输入URL" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">接口类型</label>
+                        <div class="layui-input-inline">
+                            <select name="interest" lay-filter="aihao">
+                                <option value="0" selected="">GET</option>
+                                <option value="1">POST</option>
+                                <option value="2">PUT</option>
+                                <option value="3">DELETE</option>
+                            </select>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">数据类型</label>
+                            <div class="layui-input-inline">
+                                <select name="interest" lay-filter="aihao">
+                                    <option value="0" selected="">JSON</option>
+                                    <option value="1">DATA</option>
+                                    <option value="2">XML</option>
                                 </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>测试数据:</td>
-                            <td>
-                                <textarea name="testdate" style="with:200px;height:60px;"></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>预期结果：</td>
-                            <td>
-                                <input type="text" name="exr"/> <br/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>实际结果：</td>
-                            <td>
-                                <label>{{ data1 }}</label><br/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>测试结果：</td>
-                            <td>
-                                <label>{{ data }}</label><br/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="submit" value="执行测试"/>
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">接口参数</label>
+                        <div class="layui-input-block">
+                            <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">预期结果</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="expected_result" autocomplete="off" placeholder="请输入预期结果"
+                                   class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">实际结果</label>
+                        <div class="layui-input-block">
+                            {{data1}}
+                        </div>
+                    </div>
+                    <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="demo">
+                        <div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>
+                    </div>
+                    <div class="site-demo-button" style="margin-top: 20px; margin-bottom: 0;">
+                        <button type="button" class="layui-btn site-demo-active" data-type="loading">执行</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -135,10 +134,51 @@
             //console.log(elem)
             layer.msg(elem.text());
         });
+
     });
     layui.use('table', function () {
         var table = layui.table;
     });
+    //监听提交
+    form.on('submit(demo1)', function (data) {
+        layer.alert(JSON.stringify(data.field), {
+            title: '最终的提交信息'
+        })
+        return false;
+    });
 </script>
+<script>
+    layui.use('element', function () {
+        var $ = layui.jquery
+            , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        //触发事件
+        var active = {
+            loading: function (othis) {
+                var DISABLED = 'layui-btn-disabled';
+                if (othis.hasClass(DISABLED)) return;
+
+                //模拟loading
+                var n = 0, timer = setInterval(function () {
+                    n = n + Math.random() * 20 | 0;
+                    if (n > 100) {
+                        n = 100;
+                        clearInterval(timer);
+                        othis.removeClass(DISABLED);
+                    }
+                    element.progress('demo', n + '%');
+                }, 300 + Math.random() * 1000);
+
+                othis.addClass(DISABLED);
+            }
+        };
+
+        $('.site-demo-active').on('click', function () {
+            var othis = $(this), type = $(this).data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+    });
+</script>
+
 </body>
 </html>

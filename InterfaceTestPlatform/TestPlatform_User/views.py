@@ -1,5 +1,6 @@
 from venv import logger
 
+import yagmail
 from django.db import transaction
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
@@ -152,3 +153,21 @@ def uploadtest(request):
         else:
             logger.error('上传文件类型错误！')
             return render(request, 'Page/Interface_List.html', {'message': '导入失败'})
+
+
+# 邮件发送方法
+def sendmail(title, msg, receivers):
+    yag = yagmail.SMTP(
+        host='smtp.qq.com', user='469687182@qq.com',
+        password='ppbdsowziqnlbhha', smtp_ssl=True
+    )
+
+    try:
+        yag.send(receivers, title, msg)
+        print("邮件发送成功")
+
+    except BaseException as e:
+        print(e)
+        print("Error: 无法发送邮件")
+
+
