@@ -171,3 +171,5 @@ def sendmail(title, msg, receivers):
         print("Error: 无法发送邮件")
 
 
+def test(request):
+    return render(request, 'Page/test.html')

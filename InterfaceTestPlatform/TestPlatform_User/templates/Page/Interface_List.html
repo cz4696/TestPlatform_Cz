@@ -74,10 +74,11 @@
                 </form>
                 <div class="page-container">
                     <table class="layui-table"
-                           lay-data="{ id:'idTest', page: true, limit:10, url:'/api/get_inter_data/',toolbar: true,response: {
+                           lay-data="{ id:'idTest', page: true, limits: [10,30,50],limit:10, url:'/api/get_inter_data/',toolbar: true,response: {
                 statusCode: 200
             }}" lay-filter="demo">
                         <thead>
+
                         <tr>
                             <th lay-data="{type:'checkbox'}">ID</th>
                             <th lay-data="{field:'in_id', width:100, sort: true}">ID</th>
@@ -114,6 +115,7 @@
             layer.msg(elem.text());
         });
     });
+
     layui.use('table', function () {
         var table = layui.table;
 
@@ -168,6 +170,8 @@
                 layer.msg(checkStatus.isAll ? '全选' : '未全选')
             }
         };
+
+
 
         $('.demoTable .layui-btn').on('click', function () {
             var type = $(this).data('type');
