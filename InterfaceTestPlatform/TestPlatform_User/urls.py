@@ -9,6 +9,7 @@ urlpatterns = [
     path('logout/', views.Logout, name='Logout'),
     path('register/', views.Register, name='Register'),
     path('project_list/', views.Project_List, name='Project_List'),
+    path('project_info/', views.Project_Info, name='Project_Info'),
     path('interface_list/', views.Interface_List, name='Interface_List'),
     path('interface_perform/', views.Interface_Perform, name='Interface_Perform'),
     path('add/', views.post),

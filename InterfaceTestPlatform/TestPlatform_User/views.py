@@ -57,6 +57,10 @@ def Project_List(request):  # 项目列表跳转
     return render(request, 'Page/Project_List.html')
 
 
+def Project_Info(request):  # 项目列表跳转
+    return render(request, 'Page/Project_Info.html')
+
+
 def Interface_List(request):  # 接口列表跳转
     return render(request, 'Page/Interface_List.html')
 
@@ -164,11 +168,11 @@ def sendmail(title, msg, receivers):
 
     try:
         yag.send(receivers, title, msg)
-        print("邮件发送成功")
+        print("邮件发送成功！")
 
     except BaseException as e:
         print(e)
-        print("Error: 无法发送邮件")
+        print("Error: 发送邮件失败！")
 
 
 def test(request):
