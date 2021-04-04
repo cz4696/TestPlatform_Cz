@@ -8,8 +8,11 @@ from django.contrib.auth import authenticate, login, logout  # 从app导入
 from django.contrib.auth.forms import UserCreationForm  # 自带创建用户表单，注册
 import xlrd, xlwt, json, sys
 import requests
+from idna import unicode
+
 from . import Import_Excel, models
 from .models import Project_Data, Interface_Data
+from pygments import highlight, lexers, formatters
 import datetime, time
 
 
@@ -65,45 +68,44 @@ def Interface_List(request):  # 接口列表跳转
     return render(request, 'Page/Interface_List.html')
 
 
-def Interface_Perform(request):  # 一个接口执行
-    pt = Import_Excel.cls_api()
-    exr = request.POST.get('exr', None)
-    data = ""
-    data1 = ""
-    if request.method == 'POST':
-        data = pt.post(request.POST.get('url', None), json.loads(request.POST.get('testdate', None)))
-        result = data.json()
-        data1 = result['message']
-        if int(result['message'] == int(exr)):
-            data = u'测试通过'
-        else:
-            data = u'测试失败'
-    return render(request, 'Page/Interface_Perform.html', {"data": data, "data1": data1})
-
-
-def add_args(a, b):
-    x = int(a)
-    y = int(b)
-    return x + y
-
-
-def post(request):
-    if request.method == 'POST':
-        d = {}
-        if request.POST:
-            a = request.POST.get('a', None)
-            b = request.POST.get('b', None)
-            if a and b:
-                res = add_args(a, b)
-                d['message'] = res
-                d = json.dumps(d)
-                return HttpResponse(d)
+def Interface_Perform(request):  # 单条接口执行
+    result_data = ''
+    if request.method == "POST":
+        in_url = request.POST.get('in_url')
+        in_data = request.POST.get('in_data')
+        in_expected_result = request.POST.get('in_expected_result')
+        in_type = request.POST.get('in_type')
+        if in_type == 'POST':
+            res = requests.post(url=in_url, data=in_data)
+            result = res.json()
+            in_data_json = json.dumps(result, indent=4, ensure_ascii=False, sort_keys=True)
+            # colorfule_json = highlight(in_data_json,lexers.JsonLexer(),formatters.TerminalFormatter())    # json美化
+            # print(colorfule_json)
+            in_actual_result = res.status_code  # 获取code对应value值
+            if int(in_actual_result) == int(in_expected_result):  # 需要转换为int，虽然看着一样，但类型不同，string类型
+                return render(request, 'Page/Interface_Perform.html',
+                              {'json_msg': in_data_json, 'headers_msg': res.headers, 'actual_result': in_actual_result,
+                               'state': '测试通过！'})
             else:
-                return HttpResponse(u'输入错误')
-        else:
-            return HttpResponse(u'输入为空')
+                return render(request, 'Page/Interface_Perform.html',
+                              {'state': '接口返回错误，测试不通过！', 'actual_result': in_actual_result})
+        elif in_type == 'GET':
+            res = requests.get(url=in_url, data=in_data)
+            result = res.json()
+            in_data_json = json.dumps(result, indent=4, ensure_ascii=False, sort_keys=True)
+            in_actual_result = res.status_code
+            if int(in_actual_result) == int(in_expected_result):
+                return render(request, 'Page/Interface_Perform.html',
+                              {'json_msg': in_data_json, 'headers_msg': res.headers, 'actual_result': in_actual_result,
+                               'state': '测试通过！'})
+            else:
+                return render(request, 'Page/Interface_Perform.html',
+                              {'state': '接口返回错误，测试不通过！', 'actual_result': in_actual_result})
+
+        return render(request, 'Page/Interface_Perform.html', {'json_msg': in_type},
+                      {'result_data1': result_data})
     else:
-        return HttpResponse(u'方法错误')
+        return render(request, 'Page/Interface_Perform.html')
 
 
 def Add_Project(request):  # 点击新增跳转出页面
@@ -123,7 +125,7 @@ def Add_Pj(request):  # 添加部门信息
         return HttpResponse()
 
 
-def uploadtest(request):
+def UploadExcel(request):
     if request.method == 'POST':
         f = request.FILES.get('file')
         excel_type = f.name.split('.')[1]
@@ -160,7 +162,7 @@ def uploadtest(request):
 
 
 # 邮件发送方法
-def sendmail(title, msg, receivers):
+def SendMail(title, msg, receivers):
     yag = yagmail.SMTP(
         host='smtp.qq.com', user='469687182@qq.com',
         password='ppbdsowziqnlbhha', smtp_ssl=True
@@ -175,5 +177,9 @@ def sendmail(title, msg, receivers):
         print("Error: 发送邮件失败！")
 
 
-def test(request):
-    return render(request, 'Page/test.html')
+def Edit_Project(request):
+    return render(request, 'Page/Edit_Project.html')
+
+
+def Detail_Project(request):
+    return render(request, 'Page/Detail_Project.html')

@@ -62,27 +62,27 @@
             </div>
         </div>
         <div style="margin-left: 200px">
-            <div class="layui-tab" lay-filter="demo" lay-allowclose="false">
-                <ul class="layui-tab-title">
-                    <li class="layui-this" lay-id="11">网站设置</li>
-                    <li lay-id="22">用户管理</li>
-                    <li lay-id="33">权限分配</li>
-                    <li lay-id="44">商品管理</li>
-                    <li lay-id="55">订单管理</li>
-                </ul>
-                <div class="layui-tab-content">
-                    <div class="layui-tab-item layui-show">内容1</div>
-                    <div class="layui-tab-item">内容2</div>
-                    <div class="layui-tab-item">内容3</div>
-                    <div class="layui-tab-item">内容4</div>
-                    <div class="layui-tab-item">内容5</div>
-                </div>
+        <div class="layui-tab" lay-filter="demo" lay-allowclose="true" >
+            <ul class="layui-tab-title" >
+                <li class="layui-this" lay-id="11">网站设置</li>
+                <li lay-id="22">用户管理</li>
+                <li lay-id="33">权限分配</li>
+                <li lay-id="44">商品管理</li>
+                <li lay-id="55">订单管理</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">内容1</div>
+                <div class="layui-tab-item">内容2</div>
+                <div class="layui-tab-item">内容3</div>
+                <div class="layui-tab-item">内容4</div>
+                <div class="layui-tab-item">内容5</div>
             </div>
-            <div class="site-demo-button" style="margin-bottom: 0;">
-                <button id="add_project" class="layui-btn site-demo-active" data-type="tabAdd" data-method="notice">新 增</button>
-                <button class="layui-btn site-demo-active" data-type="tabDelete">删除：商品管理</button>
-                <button class="layui-btn site-demo-active" data-type="tabChange">切换到：用户管理</button>
-            </div>
+        </div>
+        <div class="site-demo-button" style="margin-bottom: 0;">
+            <button class="layui-btn site-demo-active" data-type="tabAdd">新增Tab项</button>
+            <button class="layui-btn site-demo-active" data-type="tabDelete">删除：商品管理</button>
+            <button class="layui-btn site-demo-active" data-type="tabChange">切换到：用户管理</button>
+        </div>
         </div>
 
         {% load static %}
@@ -99,7 +99,7 @@
                         element.tabAdd('demo', {
                             title: '新选项' + (Math.random() * 1000 | 0) //用于演示
                             , content: '内容' + (Math.random() * 1000 | 0)
-                            , id: data.id //实际使用一般是规定好的id，这里以时间戳模拟下
+                            , id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
                         })
                     }
                     , tabDelete: function (othis) {
@@ -129,27 +129,6 @@
                 });
 
             });
-            layui.use(['layer', "jquery"], function () {
-                var
-                    layer = layui.layer //弹层
-                    , $ = layui.jquery
-                $('#add_project').on("click", function () {
-                    layer.open({
-                        title: '新增项目',
-                        type: 2,
-                        skin: 'layui-layer-rim', //加上边框
-                        area: ['450px', '570px'], //宽高
-                        fix: true,
-                        // btn: ['确认提交', '取消'],
-                        shadeClose: true,//点击旁边地方自动关闭
-                        content: "../add_project",
-                    });
-
-                    // layer.close(layer.index);
-
-                    // layer.close(layer.index);
-                })
-            })
         </script>
 </body>
 </html>

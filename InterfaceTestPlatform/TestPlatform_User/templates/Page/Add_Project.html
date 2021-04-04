@@ -5,13 +5,13 @@
     <title>新增项目</title>
     {% load static %}
     <link rel="stylesheet" href="{% static '/css/layui.css' %}">
-    <script src="{% static '/js/layui.js' %}" charset="utf-8"></script>
+    <script src="{% static '/js/layui.js' %}"></script>
 </head>
 
 <body>
-<form class="layui-form" action="{%url 'TestPlatform_User:Add_Pj'%}" method="post">
+<form class="layui-form" action="{%url 'TestPlatform_User:Add_Pj'%}" method="POST">
     {%csrf_token%}
-        <div class="layui-form-item" style="margin-top: 30px;">
+    <div class="layui-form-item" style="margin-top: 30px;">
         <label class="layui-form-label">项目编号</label>
         <div class="layui-input-inline">
             <input type="text" name="pj_id" lay-verify="required" placeholder="请输入项目编号" autocomplete="off"
@@ -25,21 +25,21 @@
                    class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item" style="padding-top: 25px;">
+    <div class="layui-form-item" style="margin-top: 30px;">
         <label class="layui-form-label">项目经理</label>
         <div class="layui-input-inline">
             <input type="text" name="pj_pname" lay-verify="required" placeholder="请输入项目经理名称" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
-        <div class="layui-form-item" style="padding-top: 25px;">
+    <div class="layui-form-item" style="margin-top: 30px;">
         <label class="layui-form-label">测试人员</label>
         <div class="layui-input-inline">
             <input type="text" name="pj_tname" lay-verify="required" placeholder="请输入测试人员名称" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item" style="padding-top: 20px;">
+    <div class="layui-form-item" style="margin-top: 30px;">
         <label class="layui-form-label">项目状态</label>
         <div class="layui-input-block">
             <input type="radio" name="pj_state" value="未开始" title="未开始" checked="">
@@ -56,26 +56,21 @@
         </div>
     </div>
 </form>
-{% load static %}
-<script src="{% static '/js/layui.js' %}" charset="utf-8"></script>
+<!--{% load static %}-->
+<!--<script src="{% static '/js/layui.js' %}" charset="utf-8"></script>-->
 <script type="text/javascript">
     layui.use('form', function () {
         var form = layui.form;
         //刷新界面 所有元素
         form.render();
-        // 只刷新radio元素
-        // form.render('radio');
     });
-    // $('#sub_msg').on("click", function () {
-    //     layer.close(index);
-    // })
 
     function closeSelf() {
         var index = parent.layer.getFrameIndex(window.name);
         parent.layer.close(index);
-        // alert("添加成功！")
         window.parent.location.reload();
     }
+
 </script>
 </body>
 </html>
