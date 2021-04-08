@@ -19,5 +19,3 @@ def get_inter_data(request):
     data_list = {"code": 200, "msg": "ok", "count": len(data_list), "data": data_list}
     return HttpResponse(json.dumps(data_list))
 
-
-

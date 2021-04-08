@@ -15,14 +15,35 @@
     <div class="layui-header header header-demo" style="background-color: #393D49">
         <div class="layui-main">
             <ul class="layui-nav">
-                <button style="background-color: #393D49;margin-left: -27px" type="button"
+                <!--<button style="background-color: #393D49;margin-left: -27px" type="button"-->
+                <!--class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <!--<button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <!--<button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <button style="background-color: #393D49;margin-left: -20px;" type="button"
                         class="layui-btn layui-btn-normal"><i
                         class="layui-icon"></i></button>
-                <button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i
-                        class="layui-icon"></i></button>
-                <button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i
-                        class="layui-icon"></i></button>
-                <li class="layui-nav-item" style="margin-left: 35%"><a href=""><h1>Test Platform</h1></a></li>
+                <li class="layui-nav-item"><a href="{%url 'TestPlatform_User:Home'%}"><h1>TestPlatform</h1></a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">项目管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>
+                        <dd><a href="{%url 'TestPlatform_User:Project_Info'%}">项目信息</a></dd>
+                        <dd><a href="/">项目成员</a></dd>
+                    </dl>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">接口管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a></dd>
+                        <dd><a href="{%url 'TestPlatform_User:Interface_Perform'%}">接口执行</a></dd>
+                        <dd><a href="/">批量接口</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">测试报告</a></li>
+                <li class="layui-nav-item"><a href="">邮件配置</a></li>
+                <li class="layui-nav-item"><a href="">权限管理</a></li>
                 <li class="layui-nav-item" style="float: right">
                     <a href="javascript:;">{{ user.get_username }}</a>
                     <dl class="layui-nav-child">
@@ -30,122 +51,95 @@
                         <dd><a href="{%url 'TestPlatform_User:Logout'%}">登出</a></dd>
                     </dl>
                 </li>
+                <li style="margin:12px;float: right">
+                    <div style="margin-left: 30px;">
+                        <input type="hidden" name="color" value="" id="test-all-input">
+                        <div id="test-all"></div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
-    <div class="layui-body" style="left: 0">
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <ul class="layui-nav layui-nav-tree site-demo-nav" style="margin-right: 10px;height:100%;">
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a href="{%url 'TestPlatform_User:Home'%}">主页</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">项目管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>
-                            <dd><a href="{%url 'TestPlatform_User:Project_Info'%}">信息配置</a></dd>
-                            <dd><a href="/">项目成员</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">接口管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a></dd>
-                            <dd><a href="{%url 'TestPlatform_User:Interface_Perform'%}">接口执行</a></dd>
-                            <dd><a href="/">批量接口</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item"><a href="">测试报告</a></li>
-                    <li class="layui-nav-item"><a href="">邮件配置</a></li>
-                    <li class="layui-nav-item"><a href="">权限管理</a></li>
-                </ul>
+    <div style="padding: 20px; background-color: #F2F2F2;">
+        <form class="layui-form layui-form-pane" action="{%url 'TestPlatform_User:Interface_Perform'%}"
+              method="POST">
+            <div class="layui-form-item">
+                <label class="layui-form-label">接口地址</label>
+                <div class="layui-input-block">
+                    <input id='in_url' type="text" name="in_url" required autocomplete="off"
+                           placeholder="请输入URL"
+                           class="layui-input" lay-verify="required">
+                </div>
             </div>
-        </div>
-        <div style="margin-left: 200px;">
-            <div style="padding: 20px; background-color: #F2F2F2;">
-                <form class="layui-form layui-form-pane" action="{%url 'TestPlatform_User:Interface_Perform'%}"
-                      method="POST">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">接口地址</label>
-                        <div class="layui-input-block">
-                            <input id='in_url' type="text" name="in_url" autocomplete="off" placeholder="请输入URL"
-                                   class="layui-input">
-                        </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">接口类型</label>
+                <div class="layui-input-inline">
+                    <select id="in_type" name="in_type" lay-filter="in_type">
+                        <option value="GET" selected="">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
+                    </select>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">数据类型</label>
+                    <div class="layui-input-inline">
+                        <select id="in_data_type" name="in_data_type" lay-filter="in_data_type">
+                            <option value="DATA" selected="">DATA</option>
+                            <option value="JSON">JSON</option>
+                        </select>
                     </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">接口类型</label>
-                        <div class="layui-input-inline">
-                            <select id="in_type" name="in_type" lay-filter="in_type">
-                                <option value="GET" selected="">GET</option>
-                                <option value="POST">POST</option>
-                                <option value="PUT">PUT</option>
-                                <option value="DELETE">DELETE</option>
-                            </select>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">数据类型</label>
-                            <div class="layui-input-inline">
-                                <select id="data_type" name="data_type" lay-filter="data_type">
-                                    <option value="JSON" selected="">JSON</option>
-                                    <option value="DATA">DATA</option>
-                                    <option value="XML">XML</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-form-item layui-form-text">
-                        <label class="layui-form-label">接口参数</label>
-                        <div class="layui-input-block">
-                            <textarea id='in_data' name="in_data" placeholder="请输入内容" class="layui-textarea"></textarea>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">预期结果</label>
-                        <div class="layui-input-block">
-                            <input id='in_expected_result' type="text" name="in_expected_result" autocomplete="off"
-                                   placeholder="请输入预期结果"
-                                   class="layui-input">
-                        </div>
-                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">接口参数</label>
+                <div class="layui-input-block">
+                    <textarea id='in_data' name="in_data" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">预期结果</label>
+                <div class="layui-input-block">
+                    <input id='in_expected_result' type="text" required lay-verify="required"
+                           name="in_expected_result" autocomplete="off"
+                           placeholder="请输入预期结果"
+                           class="layui-input">
+                </div>
+            </div>
 
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">实际结果</label>
-                        <div class="layui-input-block">
-                            <input id='in_actual_result' type="text" name="in_actual_result" autocomplete="off"
-                                   class="layui-input  layui-disabled" disabled>
-                        </div>
-                        <div class="layui-input-block">
-                            {{state}}
-                        </div>
-                    </div>
-                    <!--<div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="demo">-->
-                    <!--<div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>-->
-                    <!--</div>-->
-                    <div class="site-demo-button" style="margin-top: 20px; margin-bottom: 0;display:inline-block">
-                        <button type="submit" class="layui-btn site-demo-active" data-type="loading" id="sub">执 行
-                        </button>
-                    </div>
-                    <div class="site-demo-button"
-                         style="margin-top: 20px; margin-left:30px;margin-bottom: 0;display:inline-block">
-                        <button type="reset" class="layui-btn site-demo-active" id="reset">重 置</button>
-                    </div>
-                </form>
-                <div class="layui-tab" lay-filter="demo">
-                    <ul class="layui-tab-title">
-                        <li class="layui-this" lay-id="11">JsonData</li>
-                        <li lay-id="22">Headers</li>
-                    </ul>
-                    <div class="layui-tab-content">
-                        <div class="layui-tab-item layui-show "><pre id='text1' class="layui-code" lay-encode="true"
-                                                                     lay-title="JsonData">{{json_msg}}
+            <div class="layui-form-item">
+                <label class="layui-form-label">实际结果</label>
+                <div class="layui-input-block">
+                    <input id='in_actual_result' type="text" name="in_actual_result" autocomplete="off"
+                           class="layui-input  layui-disabled" disabled>
+                </div>
+            </div>
+            <!--<div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="demo">-->
+            <!--<div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>-->
+            <!--</div>-->
+            <div class="site-demo-button" style="margin-top: 20px; margin-bottom: 0;display:inline-block">
+                <button type="submit" class="layui-btn site-demo-active" id="sub" lay-submit
+                        lay-filter="formSubmit">执 行
+                </button>
+            </div>
+            <div class="site-demo-button"
+                 style="margin-top: 20px; margin-left:30px;margin-bottom: 0;display:inline-block">
+                <button type="reset" class="layui-btn site-demo-active" id="reset">重 置</button>
+            </div>
+        </form>
+        <div class="layui-tab" lay-filter="demo">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="11">JsonData</li>
+                <li lay-id="22">Headers</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show "><pre id='text1' class="layui-code" lay-encode="true"
+                                                             lay-title="JsonData">{{json_msg}}
                 </pre>
-                        </div>
-                        <div class="layui-tab-item"><pre id='text2' class="layui-code" lay-encode="true"
-                                                         lay-title="HeadersData">{{headers_msg}}
+                </div>
+                <div class="layui-tab-item"><pre id='text2' class="layui-code" lay-encode="true"
+                                                 lay-title="HeadersData">{{headers_msg}}
                 </pre>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -170,12 +164,29 @@
     layui.use('table', function () {
         var table = layui.table;
     });
-    //监听提交
-    form.on('submit(demo1)', function (data) {
-        layer.alert(JSON.stringify(data.field), {
-            title: '最终的提交信息'
-        });
-        return false;
+    layui.use(['layer'], function () {
+        var expected_result = document.getElementById('in_expected_result').value;
+        var
+            layer = layui.layer //弹层
+            , $ = layui.jquery;
+        if ('{{actual_result}}' !== '') {
+            // $("#sub").click(function () {
+            //配置一个透明的询问框
+            layer.open({
+                type: 1,
+                title: '执行结果',
+                content: '   ' + '{{state}}',
+                btn: ['哦'],
+                area: ['200px', '150px'],
+                time: 200000,
+                closeBtn: "1",
+                // layer.msg('{{state}}', {
+                //     time: 20000, //20s后自动关闭
+                //     btn: ['明白了', '知道了', '哦']
+                // });
+            })
+            // });
+        }
     });
 </script>
 <script type="text/javascript">
@@ -188,7 +199,6 @@
             loading: function (othis) {
                 var DISABLED = 'layui-btn-disabled';
                 if (othis.hasClass(DISABLED)) return;
-
                 //模拟loading
                 var n = 0, timer = setInterval(function () {
                     n = n + Math.random() * 20 | 0;
@@ -208,58 +218,63 @@
             var othis = $(this), type = $(this).data('type');
             active[type] ? active[type].call(this, othis) : '';
         });
-
-        //--------------------------------------------------------
-        //执行后获取接口list中的值
-        var storage = window.sessionStorage;
-        in_url = storage.in_url;
-        in_expected_result = storage.in_expected_result;
-        in_data = storage.in_data;
-        // var in_actual_result = JSON.parse('{{actual_result|safe}}');
-        // alert(in_actual_result);
-
-        var in_type = storage.in_type;
-        var obj = document.getElementById("in_type");
-        var data = obj.selectedIndex;
-        old_in_type = obj.options[data].text;
-        if (in_url === undefined) {
-            document.getElementById("in_url").value = '';
-            document.getElementById("in_expected_result").value = '';
-            document.getElementById("in_data").value = '';
-        } else {
-            document.getElementById("in_url").value = in_url;
-            document.getElementById("in_expected_result").value = parseInt(in_expected_result);
-            document.getElementById("in_data").value = in_data;
-            //解决替换select中的options重复问题
-            if (in_type.toUpperCase() !== old_in_type) {
-                obj.options[0].text = in_type.toUpperCase();
-                obj.options[0].value = in_type.toUpperCase();
-                if (obj.options[0].value === obj.options[1].value) {
-                    obj.options[1].value = old_in_type;
-                    obj.options[1].text = old_in_type;
-                } else if (obj.options[0].value === obj.options[2].value) {
-                    obj.options[2].value = old_in_type;
-                    obj.options[2].text = old_in_type;
-                } else {
-                    obj.options[3].value = old_in_type;
-                    obj.options[3].text = old_in_type;
-                }
-
+    });
+    //--------------------------------------------------------
+    //执行后获取接口list中的值
+    var storage = window.sessionStorage;
+    in_url = storage.in_url;
+    in_expected_result = storage.in_expected_result;
+    in_data = storage.in_data;
+    in_type = storage.in_type;
+    in_data_type = storage.in_data_type;
+    obj = document.getElementById("in_type");
+    data_type = document.getElementById("in_data_type");
+    var data = obj.selectedIndex;
+    var data1 = data_type.selectedIndex;
+    old_in_type = obj.options[data].text;
+    old_in_data_type = data_type.options[data1].text;
+    if (in_url === undefined) {
+        document.getElementById("in_url").value = '';
+        document.getElementById("in_expected_result").value = '';
+        document.getElementById("in_data").value = '';
+    } else {
+        document.getElementById("in_url").value = in_url;
+        document.getElementById("in_expected_result").value = parseInt(in_expected_result);
+        document.getElementById("in_data").value = in_data;
+        //解决替换select中的options重复问题  接口类型
+        if (in_type.toUpperCase() !== old_in_type.toUpperCase()) {
+            obj.options[0].text = in_type.toUpperCase();
+            obj.options[0].value = in_type.toUpperCase();
+            if (obj.options[0].value === obj.options[1].value) {
+                obj.options[1].value = old_in_type;
+                obj.options[1].text = old_in_type;
+            } else if (obj.options[0].value === obj.options[2].value) {
+                obj.options[2].value = old_in_type;
+                obj.options[2].text = old_in_type;
+            } else {
+                obj.options[3].value = old_in_type;
+                obj.options[3].text = old_in_type;
             }
         }
-        var storage1 = window.sessionStorage;       //存取后台的in_actual_result
-        storage1['in_actual_result'] = "{{actual_result}}";
-        in_actual_result = storage1.in_actual_result;
-        document.getElementById("in_actual_result").value = in_actual_result;
-        $(function () {         // 点击重置按钮清空sessionStorage数据
-            // $("#sub").click(function () {
-            //     document.getElementById("in_actual_result").value = "{{actual_result}}";
-            // });
-            $("#reset").click(function () {
-                sessionStorage.clear();
-            });
-        })
-    });
+        if (in_data_type.toUpperCase() !== old_in_data_type.toUpperCase()) {  //避免数据类型重复
+            data_type.options[0].text = in_data_type.toUpperCase();
+            data_type.options[0].value = in_data_type.toUpperCase();
+            if (data_type.options[0].value === data_type.options[1].value) {
+                data_type.options[1].value = old_in_data_type;
+                data_type.options[1].text = old_in_data_type;
+            }
+        }
+    }
+    var storage1 = window.sessionStorage;       //存取后台的in_actual_result
+    storage1['in_actual_result'] = "{{actual_result}}";
+    in_actual_result = storage1.in_actual_result;
+    document.getElementById("in_actual_result").value = in_actual_result;
+    $(function () {
+        $("#reset").click(function () {    // 点击重置按钮清空sessionStorage数据
+            sessionStorage.clear();
+        });
+    })
+
 
 </script>
 

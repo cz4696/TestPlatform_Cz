@@ -14,14 +14,35 @@
     <div class="layui-header header header-demo" style="background-color: #393D49">
         <div class="layui-main">
             <ul class="layui-nav">
-                <button style="background-color: #393D49;margin-left: -27px" type="button"
+                <!--<button style="background-color: #393D49;margin-left: -27px" type="button"-->
+                <!--class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <!--<button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <!--<button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <button style="background-color: #393D49;margin-left: -20px;" type="button"
                         class="layui-btn layui-btn-normal"><i
                         class="layui-icon"></i></button>
-                <button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i
-                        class="layui-icon"></i></button>
-                <button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i
-                        class="layui-icon"></i></button>
-                <li class="layui-nav-item" style="margin-left: 35%"><a href=""><h1>Test Platform</h1></a></li>
+                <li class="layui-nav-item"><a href="{%url 'TestPlatform_User:Home'%}"><h1>TestPlatform</h1></a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">项目管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>
+                        <dd><a href="{%url 'TestPlatform_User:Project_Info'%}">项目信息</a></dd>
+                        <dd><a href="/">项目成员</a></dd>
+                    </dl>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">接口管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a></dd>
+                        <dd><a href="{%url 'TestPlatform_User:Interface_Perform'%}">接口执行</a></dd>
+                        <dd><a href="/">批量接口</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">测试报告</a></li>
+                <li class="layui-nav-item"><a href="">邮件配置</a></li>
+                <li class="layui-nav-item"><a href="">权限管理</a></li>
                 <li class="layui-nav-item" style="float: right">
                     <a href="javascript:;">{{ user.get_username }}</a>
                     <dl class="layui-nav-child">
@@ -29,39 +50,16 @@
                         <dd><a href="{%url 'TestPlatform_User:Logout'%}">登出</a></dd>
                     </dl>
                 </li>
+                <li style="margin:12px;float: right">
+                    <div style="margin-left: 30px;">
+                        <input type="hidden" name="color" value="" id="test-all-input">
+                        <div id="test-all"></div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
-    <div class="layui-body" style="left: 0">
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <ul class="layui-nav layui-nav-tree site-demo-nav" style="margin-right: 10px;height:100%;">
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a href="{%url 'TestPlatform_User:Home'%}">主页</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">项目管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>
-                            <dd><a href="{%url 'TestPlatform_User:Project_Info'%}">信息配置</a></dd>
-                            <dd><a href="/">项目成员</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">接口管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a></dd>
-                            <dd><a href="{%url 'TestPlatform_User:Interface_Perform'%}">接口执行</a></dd>
-                            <dd><a href="/">批量接口</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item"><a href="">测试报告</a></li>
-                    <li class="layui-nav-item"><a href="">邮件配置</a></li>
-                    <li class="layui-nav-item"><a href="">权限管理</a></li>
-                </ul>
-            </div>
-        </div>
-        <div style="margin-left: 200px;">
+        <!--<div style="margin-left: 200px;">-->
             <div style="padding: 20px; background-color: #F2F2F2;">
                 <button id="add_project" class="layui-btn" type="button" data-method="notice">新 增
                 </button>

@@ -19,6 +19,7 @@ class Interface_Data(models.Model):
     in_mname = models.CharField(max_length=10)
     in_type = models.CharField(max_length=8)
     in_url = models.CharField(max_length=50)
+    in_data_type = models.CharField(max_length=8)
     in_data = models.CharField(max_length=50)
     in_tname = models.CharField(max_length=10)
     in_expected_result = models.CharField(max_length=20)

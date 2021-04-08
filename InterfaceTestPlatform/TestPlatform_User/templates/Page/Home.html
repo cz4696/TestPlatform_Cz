@@ -14,14 +14,35 @@
     <div class="layui-header header header-demo" style="background-color: #393D49">
         <div class="layui-main">
             <ul class="layui-nav">
-                <button style="background-color: #393D49;margin-left: -27px" type="button"
+                <!--<button style="background-color: #393D49;margin-left: -27px" type="button"-->
+                <!--class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <!--<button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <!--<button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <button style="background-color: #393D49;margin-left: -20px;" type="button"
                         class="layui-btn layui-btn-normal"><i
                         class="layui-icon"></i></button>
-                <button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i
-                        class="layui-icon"></i></button>
-                <button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i
-                        class="layui-icon"></i></button>
-                <li class="layui-nav-item" style="margin-left: 35%"><a href=""><h1>Test Platform</h1></a></li>
+                <li class="layui-nav-item"><a href="{%url 'TestPlatform_User:Home'%}"><h1>TestPlatform</h1></a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">项目管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>
+                        <dd><a href="{%url 'TestPlatform_User:Project_Info'%}">项目信息</a></dd>
+                        <dd><a href="/">项目成员</a></dd>
+                    </dl>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">接口管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a></dd>
+                        <dd><a href="{%url 'TestPlatform_User:Interface_Perform'%}">接口执行</a></dd>
+                        <dd><a href="/">批量接口</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">测试报告</a></li>
+                <li class="layui-nav-item"><a href="">邮件配置</a></li>
+                <li class="layui-nav-item"><a href="">权限管理</a></li>
                 <li class="layui-nav-item" style="float: right">
                     <a href="javascript:;">{{ user.get_username }}</a>
                     <dl class="layui-nav-child">
@@ -38,127 +59,126 @@
             </ul>
         </div>
     </div>
-    <div class="layui-body" style="left: 0">
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <ul class="layui-nav layui-nav-tree site-demo-nav" style="margin-right: 10px;height:100%;">
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a href="{%url 'TestPlatform_User:Home'%}">主页</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">项目管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>
-                            <dd><a href="{%url 'TestPlatform_User:Project_Info'%}">项目信息</a></dd>
-                            <dd><a href="/">项目成员</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">接口管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a></dd>
-                            <dd><a href="{%url 'TestPlatform_User:Interface_Perform'%}">接口执行</a></dd>
-                            <dd><a href="/">批量接口</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item"><a href="">测试报告</a></li>
-                    <l class="layui-nav-item"><a href="">邮件配置</a></l>
-                    <li class="layui-nav-item"><a href="">权限管理</a></li>
-                </ul>
-            </div>
+    <!--<div class="layui-side layui-bg-black">-->
+    <!--<div class="layui-side-scroll">-->
+    <!--<ul class="layui-nav layui-nav-tree " lay-filter="demo" style="margin-right: 10px;height:100%;">-->
+    <!--<li class="layui-nav-item">-->
+    <!--<a href="{%url 'TestPlatform_User:Home'%}">主页</a>-->
+    <!--</li>-->
+    <!--<li class="layui-nav-item">-->
+    <!--<a href="javascript:;">项目管理</a>-->
+    <!--<dl class="layui-nav-child">-->
+    <!--<dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>-->
+    <!--<dd><a href="{%url 'TestPlatform_User:Project_Info'%}">项目信息</a></dd>-->
+    <!--<dd><a href="/">项目成员</a></dd>-->
+    <!--</dl>-->
+    <!--</li>-->
+    <!--<li class="layui-nav-item">-->
+    <!--<a href="javascript:;">接口管理</a>-->
+    <!--<dl class="layui-nav-child">-->
+    <!--<dd><a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a></dd>-->
+    <!--<dd><a href="{%url 'TestPlatform_User:Interface_Perform'%}">接口执行</a></dd>-->
+    <!--<dd><a href="/">批量接口</a></dd>-->
+    <!--</dl>-->
+    <!--</li>-->
+    <!--<li class="layui-nav-item"><a href="">测试报告</a></li>-->
+    <!--<li class="layui-nav-item"><a href="">邮件配置</a></li>-->
+    <!--<li class="layui-nav-item"><a href="">权限管理</a></li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div style="margin-left: 200px;">-->
+    <div style="padding: 20px; background-color: #F2F2F2; ">
+        <div style="font-size:30px;margin-bottom:15px;font-family: 'JetBrains Mono'" id='time'
+             class="layui-card-body">
         </div>
-        <div style="margin-left: 200px;">
-            <div style="padding: 20px; background-color: #F2F2F2; ">
-                <div style="font-size:30px;margin-bottom:15px;font-family: 'JetBrains Mono'" id='time' class="layui-card-body">
-                </div>
-                <div class="layui-row layui-col-space15">
-                    <div class="layui-col-md6">
-                        <div class="layui-card">
-                            <div class="layui-card-header">内容面板</div>
-                            <div class="layui-card-body">
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-col-md6">
-                        <div class="layui-card">
-                            <div class="layui-card-header">内容面板</div>
-                            <div class="layui-card-body">
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-col-md12">
-                        <div class="layui-card">
-                            <div class="layui-card-header">页面</div>
-                            <div class="layui-card-body">
-                                待定
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-col-md6">
-                        <div class="layui-card">
-                            <div class="layui-card-header">内容面板</div>
-                            <div class="layui-card-body">
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-col-md6">
-                        <div class="layui-card">
-                            <div class="layui-card-header">内容面板</div>
-                            <div class="layui-card-body">
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="layui-col-md6">
-                        <div class="layui-card">
-                            <div class="layui-card-header">内容面板</div>
-                            <div class="layui-card-body">
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                            </div>
-                        </div>
-
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header">内容面板</div>
+                    <div class="layui-card-body">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
                     </div>
                 </div>
+            </div>
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header">内容面板</div>
+                    <div class="layui-card-body">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">页面</div>
+                    <div class="layui-card-body">
+                        待定
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header">内容面板</div>
+                    <div class="layui-card-body">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header">内容面板</div>
+                    <div class="layui-card-body">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+
+            </div>
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header">内容面板</div>
+                    <div class="layui-card-body">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
+
 
 {% load static %}
 <script src="{% static '/js/layui.js' %}" charset="utf-8"></script>
@@ -172,6 +192,7 @@
             layer.msg(elem.text());
         });
     });
+
     layui.use('colorpicker', function () {
         var $ = layui.$
             , colorpicker = layui.colorpicker;
@@ -197,8 +218,8 @@
                 color || this.change(color); //清空时执行 change
             }
             , change: function (color) {
-                //给当前页面头部和左侧设置主题色
-                $('.header-demo,.layui-side .layui-nav').css('background-color', color);
+                //给当前页面头部设置主题色
+                $('.header-demo,.layui-side,.layui-nav,.layui-btn').css('background-color', color);
             }
         });
     });
@@ -214,8 +235,8 @@
         minutes = date.getMinutes();
         seconds = date.getSeconds();
         document.getElementById("time").innerHTML = monthEnglish[month] + "\t\t" + day + "\t\t" + hours + ":" + minutes + ":" + seconds + "\t\t" + year;
+    }
 
-    };
     setInterval("time()", 1000);
 </script>
 </body>

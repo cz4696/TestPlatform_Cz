@@ -17,6 +17,10 @@ urlpatterns = [
     path('upload_excel/', views.UploadExcel, name='UploadExcel'),
     path('edit_project/', views.Edit_Project, name='Edit_Project'),
     path('detail_project/', views.Detail_Project, name='Detail_Project'),
+    path('delete_data/', views.Delete_Data, name='Delete_Data'),
+    path('update_data/', views.Update_Data, name='Update_Data'),
+    path('batch_delete/', views.Batch_Delete, name='Batch_Delete'),
+    path('select_data/', views.Select_Data, name='Select_Data'),
 
 
     # path('interface_list/', views.Interface_List, name='Interface_List'),

@@ -14,14 +14,35 @@
     <div class="layui-header header header-demo" style="background-color: #393D49">
         <div class="layui-main">
             <ul class="layui-nav">
-                <button style="background-color: #393D49;margin-left: -27px" type="button"
+                <!--<button style="background-color: #393D49;margin-left: -27px" type="button"-->
+                <!--class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <!--<button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <!--<button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <button style="background-color: #393D49;margin-left: -20px;" type="button"
                         class="layui-btn layui-btn-normal"><i
                         class="layui-icon"></i></button>
-                <button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i
-                        class="layui-icon"></i></button>
-                <button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i
-                        class="layui-icon"></i></button>
-                <li class="layui-nav-item" style="margin-left: 35%"><a href=""><h1>Test Platform</h1></a></li>
+                <li class="layui-nav-item"><a href="{%url 'TestPlatform_User:Home'%}"><h1>TestPlatform</h1></a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">项目管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>
+                        <dd><a href="{%url 'TestPlatform_User:Project_Info'%}">项目信息</a></dd>
+                        <dd><a href="/">项目成员</a></dd>
+                    </dl>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">接口管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a></dd>
+                        <dd><a href="{%url 'TestPlatform_User:Interface_Perform'%}">接口执行</a></dd>
+                        <dd><a href="/">批量接口</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">测试报告</a></li>
+                <li class="layui-nav-item"><a href="">邮件配置</a></li>
+                <li class="layui-nav-item"><a href="">权限管理</a></li>
                 <li class="layui-nav-item" style="float: right">
                     <a href="javascript:;">{{ user.get_username }}</a>
                     <dl class="layui-nav-child">
@@ -29,127 +50,104 @@
                         <dd><a href="{%url 'TestPlatform_User:Logout'%}">登出</a></dd>
                     </dl>
                 </li>
+                <li style="margin:12px;float: right">
+                    <div style="margin-left: 30px;">
+                        <input type="hidden" name="color" value="" id="test-all-input">
+                        <div id="test-all"></div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
-    <div class="layui-body" style="left: 0">
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <ul class="layui-nav layui-nav-tree site-demo-nav" style="margin-right: 10px;height:100%;">
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a href="{%url 'TestPlatform_User:Home'%}">主页</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">项目管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>
-                            <dd><a href="{%url 'TestPlatform_User:Project_Info'%}">信息配置</a></dd>
-                            <dd><a href="/">项目成员</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">接口管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a></dd>
-                            <dd><a href="{%url 'TestPlatform_User:Interface_Perform'%}">接口执行</a></dd>
-                            <dd><a href="/">批量接口</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item"><a href="">测试报告</a></li>
-                    <li class="layui-nav-item"><a href="">邮件配置</a></li>
-                    <li class="layui-nav-item"><a href="">权限管理</a></li>
-                </ul>
-            </div>
+    <div class="layui-tab" lay-filter="demo" lay-allowclose="false">
+        <ul class="layui-tab-title">
+            <li class="layui-this" lay-id="11">网站设置</li>
+            <li lay-id="22">用户管理</li>
+            <li lay-id="33">权限分配</li>
+            <li lay-id="44">商品管理</li>
+            <li lay-id="55">订单管理</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">内容1</div>
+            <div class="layui-tab-item">内容2</div>
+            <div class="layui-tab-item">内容3</div>
+            <div class="layui-tab-item">内容4</div>
+            <div class="layui-tab-item">内容5</div>
         </div>
-        <div style="margin-left: 200px">
-            <div class="layui-tab" lay-filter="demo" lay-allowclose="false">
-                <ul class="layui-tab-title">
-                    <li class="layui-this" lay-id="11">网站设置</li>
-                    <li lay-id="22">用户管理</li>
-                    <li lay-id="33">权限分配</li>
-                    <li lay-id="44">商品管理</li>
-                    <li lay-id="55">订单管理</li>
-                </ul>
-                <div class="layui-tab-content">
-                    <div class="layui-tab-item layui-show">内容1</div>
-                    <div class="layui-tab-item">内容2</div>
-                    <div class="layui-tab-item">内容3</div>
-                    <div class="layui-tab-item">内容4</div>
-                    <div class="layui-tab-item">内容5</div>
-                </div>
-            </div>
-            <div class="site-demo-button" style="margin-bottom: 0;">
-                <button id="add_project" class="layui-btn site-demo-active" data-type="tabAdd" data-method="notice">新 增</button>
-                <button class="layui-btn site-demo-active" data-type="tabDelete">删除：商品管理</button>
-                <button class="layui-btn site-demo-active" data-type="tabChange">切换到：用户管理</button>
-            </div>
-        </div>
+    </div>
+    <div class="site-demo-button" style="margin-bottom: 0;">
+        <button id="add_project" class="layui-btn site-demo-active" data-type="tabAdd" data-method="notice">新
+            增
+        </button>
+        <button class="layui-btn site-demo-active" data-type="tabDelete">删除：商品管理</button>
+        <button class="layui-btn site-demo-active" data-type="tabChange">切换到：用户管理</button>
+    </div>
+</div>
 
-        {% load static %}
-        <script src="{% static '/js/layui.js' %}" charset="utf-8"></script>
-        <script>
-            layui.use('element', function () {
-                var $ = layui.jquery
-                    , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
-
-                //触发事件
-                var active = {
-                    tabAdd: function () {
-                        //新增一个Tab项
-                        element.tabAdd('demo', {
-                            title: '新选项' + (Math.random() * 1000 | 0) //用于演示
-                            , content: '内容' + (Math.random() * 1000 | 0)
-                            , id: data.id //实际使用一般是规定好的id，这里以时间戳模拟下
-                        })
-                    }
-                    , tabDelete: function (othis) {
-                        //删除指定Tab项
-                        element.tabDelete('demo', '44'); //删除：“商品管理”
-
-
-                        othis.addClass('layui-btn-disabled');
-                    }
-                    , tabChange: function () {
-                        //切换到指定Tab项
-                        element.tabChange('demo', '22'); //切换到：用户管理
-                    }
-                };
-
-                $('.site-demo-active').on('click', function () {
-                    var othis = $(this), type = othis.data('type');
-                    active[type] ? active[type].call(this, othis) : '';
-                });
-
-                //Hash地址的定位
-                var layid = location.hash.replace(/^#test=/, '');
-                element.tabChange('test', layid);
-
-                element.on('tab(test)', function (elem) {
-                    location.hash = 'test=' + $(this).attr('lay-id');
-                });
-
-            });
-            layui.use(['layer', "jquery"], function () {
-                var
-                    layer = layui.layer //弹层
-                    , $ = layui.jquery
-                $('#add_project').on("click", function () {
-                    layer.open({
-                        title: '新增项目',
-                        type: 2,
-                        skin: 'layui-layer-rim', //加上边框
-                        area: ['450px', '570px'], //宽高
-                        fix: true,
-                        // btn: ['确认提交', '取消'],
-                        shadeClose: true,//点击旁边地方自动关闭
-                        content: "../add_project",
-                    });
-
-                    // layer.close(layer.index);
-
-                    // layer.close(layer.index);
+{% load static %}
+<script src="{% static '/js/layui.js' %}" charset="utf-8"></script>
+<script>
+    layui.use('element', function () {
+        var $ = layui.jquery
+            , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        //触发事件
+        var active = {
+            tabAdd: function () {
+                //新增一个Tab项
+                element.tabAdd('demo', {
+                    title: '新选项' + (Math.random() * 1000 | 0) //用于演示
+                    , content: '内容' + (Math.random() * 1000 | 0)
+                    , id: data.id //实际使用一般是规定好的id，这里以时间戳模拟下
                 })
-            })
-        </script>
+            }
+            , tabDelete: function (othis) {
+                //删除指定Tab项
+                element.tabDelete('demo', '44'); //删除：“商品管理”
+
+
+                othis.addClass('layui-btn-disabled');
+            }
+            , tabChange: function () {
+                //切换到指定Tab项
+                element.tabChange('demo', '22'); //切换到：用户管理
+            }
+        };
+
+        $('.site-demo-active').on('click', function () {
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+
+        //Hash地址的定位
+        var layid = location.hash.replace(/^#test=/, '');
+        element.tabChange('test', layid);
+
+        element.on('tab(test)', function (elem) {
+            location.hash = 'test=' + $(this).attr('lay-id');
+        });
+
+    });
+    layui.use(['layer', "jquery"], function () {
+        var
+            layer = layui.layer //弹层
+            , $ = layui.jquery;
+        $('#add_project').on("click", function () {
+            layer.open({
+                title: '新增项目',
+                type: 2,
+                skin: 'layui-layer-rim', //加上边框
+                area: ['450px', '570px'], //宽高
+                fix: true,
+                // btn: ['确认提交', '取消'],
+                shadeClose: true,//点击旁边地方自动关闭
+                content: "../add_project",
+            });
+
+            // layer.close(layer.index);
+
+            // layer.close(layer.index);
+        })
+    })
+</script>
 </body>
 </html>

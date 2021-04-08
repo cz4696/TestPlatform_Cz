@@ -15,14 +15,35 @@
     <div class="layui-header header header-demo" style="background-color: #393D49">
         <div class="layui-main">
             <ul class="layui-nav">
-                <button style="background-color: #393D49;margin-left: -27px" type="button"
+                <!--<button style="background-color: #393D49;margin-left: -27px" type="button"-->
+                <!--class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <!--<button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <!--<button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i-->
+                <!--class="layui-icon"></i></button>-->
+                <button style="background-color: #393D49;margin-left: -20px;" type="button"
                         class="layui-btn layui-btn-normal"><i
                         class="layui-icon"></i></button>
-                <button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i
-                        class="layui-icon"></i></button>
-                <button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i
-                        class="layui-icon"></i></button>
-                <li class="layui-nav-item" style="margin-left: 35%"><a href=""><h1>Test Platform</h1></a></li>
+                <li class="layui-nav-item"><a href="{%url 'TestPlatform_User:Home'%}"><h1>TestPlatform</h1></a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">项目管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>
+                        <dd><a href="{%url 'TestPlatform_User:Project_Info'%}">项目信息</a></dd>
+                        <dd><a href="/">项目成员</a></dd>
+                    </dl>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">接口管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a></dd>
+                        <dd><a href="{%url 'TestPlatform_User:Interface_Perform'%}">接口执行</a></dd>
+                        <dd><a href="/">批量接口</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">测试报告</a></li>
+                <li class="layui-nav-item"><a href="">邮件配置</a></li>
+                <li class="layui-nav-item"><a href="">权限管理</a></li>
                 <li class="layui-nav-item" style="float: right">
                     <a href="javascript:;">{{ user.get_username }}</a>
                     <dl class="layui-nav-child">
@@ -30,89 +51,58 @@
                         <dd><a href="{%url 'TestPlatform_User:Logout'%}">登出</a></dd>
                     </dl>
                 </li>
+                <li style="margin:12px;float: right">
+                    <div style="margin-left: 30px;">
+                        <input type="hidden" name="color" value="" id="test-all-input">
+                        <div id="test-all"></div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
-    <div class="layui-body" style="left: 0">
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <ul class="layui-nav layui-nav-tree site-demo-nav" style="margin-right: 10px;height:100%;">
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a href="{%url 'TestPlatform_User:Home'%}">主页</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">项目管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>
-                            <dd><a href="{%url 'TestPlatform_User:Project_Info'%}">信息配置</a></dd>
-                            <dd><a href="/">项目成员</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">接口管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a></dd>
-                            <dd><a href="{%url 'TestPlatform_User:Interface_Perform'%}">接口执行</a></dd>
-                            <dd><a href="/">批量接口</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item"><a href="">测试报告</a></li>
-                    <li class="layui-nav-item"><a href="">邮件配置</a></li>
-                    <li class="layui-nav-item"><a href="">权限管理</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div style="margin-left: 200px;">
-            <div style="padding: 20px; background-color: #F2F2F2;">
-                <form action="{% url 'TestPlatform_User:UploadExcel' %}" method="post"
-                      enctype="multipart/form-data">
-                    <button type="button" class="layui-btn" id="test3" name="file"><i class="layui-icon"></i>上传文件
-                    </button>
-                    <input type="file" style="width: 50%" name="file" id="filename">
-                    <button class="btn btn-primary-outline radius size-S" type="submit">提交</button>
-                </form>
-                <div class="page-container">
-                    <table class="layui-table"
-                           lay-data="{ id:'idTest', page: true, limits: [10,30,50],limit:10, url:'/api/get_inter_data/',toolbar: true,response: {
-                statusCode: 200
-            }}" lay-filter="demo">
-                        <thead>
-
-                        <tr>
-                            <th lay-data="{type:'checkbox'}">ID</th>
-                            <th lay-data="{field:'in_id', width:100, sort: true}">ID</th>
-                            <th lay-data="{field:'in_type', width:100}">接口类型</th>
-                            <th lay-data="{field:'in_url', width:300, sort: true}">接口地址</th>
-                            <th lay-data="{field:'in_data', width:300}">接口参数</th>
-                            <th lay-data="{field:'in_tname', minWidth: 100}">测试人员</th>
-                            <th lay-data="{field:'in_expected_result', sort: true, align: 'right'}">预期结果</th>
-                            <th lay-data="{field:'in_actual_result', sort: true, minWidth: 100, align: 'right'}">实际结果
-                            <th lay-data="{fixed: 'right', width:250, align:'center', toolbar: '#barDemo'}">操作</th>
-                        </tr>
-                        <script type="text/html" id="barDemo">
-                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-                            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                            <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="perform"
-                               href="{%url 'TestPlatform_User:Interface_Perform'%}">执行</a>
-                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-                        </script>
-                        </thead>
-                    </table>
+    <!--<div style="margin-left: 200px;">-->
+    <div style="padding: 30px; background-color: #F2F2F2;">
+        <div class="layui-upload demoTable ">
+            <div class="demoTable">
+            <button type="button" class="layui-btn" id="upload" name="file"><i class="layui-icon"></i>上传用例</button>
+                <div class="layui-inline ">
+                    <input class="layui-input" name="id" id="demoReload" autocomplete="off" style="margin-left: 50px;">
                 </div>
+                <button class="layui-btn" data-type="reload" style="margin-left: 50px;">搜索</button>
+                <button type="button" class="layui-btn layui-btn-danger" id="batchDelete" data-type="getCheckData"
+                        style="float: right; margin-right: 20px">批量删除
+                </button>
+                <button type="button" class="layui-btn layui-btn-warm" id="addInterface"
+                        style="float: right;margin-right: 20px">新增用例
+                </button>
             </div>
+
         </div>
+
+
+        <table class="layui-hide" id="table_data" lay-filter="table_data"></table>
+        <script type="text/html" id="toolbar">
+            <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="perform"
+               href="{%url 'TestPlatform_User:Interface_Perform'%}">执行</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit"
+               href="{%url 'TestPlatform_User:Edit_Project'%}">修改</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
     </div>
 </div>
 
+
 {% load static %}
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 <script src="{% static '/js/layui.js' %}" charset="utf-8"></script>
 <script src="{% static '/js/lay/modules/upload.js' %}" charset="utf-8"></script>
+<!--<script src="{% static '/js/lay/modules/table.js' %}" charset="utf-8"></script>-->
+<!--table.js中搜索i.data("edit")改为dblclick-->
 <script>
     layui.use('element', function () {
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
         //监听导航点击
-        element.on('nav(demo)', function (elem) {
+        element.on('nav(table_data)', function (elem) {
             //console.log(elem)
             layer.msg(elem.text());
         });
@@ -120,34 +110,142 @@
 
     layui.use('table', function () {
         var table = layui.table;
+        table.on('edit(table_data)', function (obj) {
+            var value = obj.value //得到修改后的值
+                , data = obj.data //得到所在行所有键值
+                , field = obj.field; //得到字段
+            layer.confirm('确定将信息修改为：' + value, function (index) {
+                $.ajax({
+                    type: 'post',
+                    url: "{%url 'TestPlatform_User:Update_Data'%}",
+                    data: {'data_id': data.id, 'field': field, 'value': value},
+                    traditional: true,
+                    async: false,
+                    success: function (result) {
+                    },
+                    error: function (result) {
+                    }
+                });
+                // obj.update();
+                layer.close(index);
+            });
+        });
+        table.render({
+            elem: '#table_data'	//表单ID
+            , url: 'http://localhost:8000/api/get_inter_data/'	//数据接口
+            , page: true			//分页设置
+            , limit: 20		//默认每一页显示数量
+            , limits: [10, 20, 30, 40, 50]		//可选择每页显示的数量
+            , id: 'testReload'
+            , cols: [[			//表格列
+                {type: 'checkbox', sort: false}
+                , {field: 'in_id', title: 'ID', align: 'center', width: 70, sort: true, edit: 'int'}
+                , {field: 'in_mname', title: '接口名称', width: 180, sort: false, edit: 'text'}
+                , {field: 'in_type', title: '接口类型', align: 'center', width: 90, sort: false, edit: 'text'}
+                , {field: 'in_url', title: '接口地址', width: 450, sort: false, edit: 'text'}
+                , {field: 'in_data', title: '接口参数', width: 350, sort: false, edit: 'text'}
+                , {field: 'in_data_type', title: '数据类型', align: 'center', width: 90, sort: false, edit: 'text'}
+                , {field: 'in_tname', title: '测试人员', align: 'center', width: 90, sort: false, edit: 'text'}
+                , {field: 'in_expected_result', title: '预期结果', sort: false, edit: 'text'}
+                , {field: 'dobar', title: '操作', align: 'center', sort: false, toolbar: '#toolbar'}
+            ]]
+            , response: {
+                statusCode: 200
+            }
+            , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据，res为从url中get到的数据
+                var result;
+                // console.log(this);
+                // console.log(JSON.stringify(res));
+                if (this.page.curr) {
+                    result = res.data.slice(this.limit * (this.page.curr - 1), this.limit * this.page.curr);
+                } else {
+                    result = res.data.slice(0, this.limit);
+                }
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": result //解析数据列表
+                };
 
+            }
+        });
+        var $ = layui.$, active = {
+            reload: function () {
+                var demoReload = $('#demoReload');
+                $.ajax({
+                    type: 'post',
+                    url: "{%url 'TestPlatform_User:Select_Data'%}",
+                    data: {'id':demoReload.val()},
+                    traditional: true,
+                    async: false,
+                    success: function (result) {
+                    },
+                    error: function (result) {
+                    }
+                });
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        key: {
+                            in_id: demoReload.val()
+                        }
+                    }
+                });
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
     });
+
+    //上传功能
     layui.use('upload', function () {
         var $ = layui.jquery
             , upload = layui.upload;
         upload.render({
-            elem: '#test3'
-            , url: '/api/get_inter_data/' //改成您自己的上传接口
-            , accept: 'file' //普通文件
+            elem: '#upload'
+            , url: "{% url 'TestPlatform_User:UploadExcel' %}" //改成自己的上传路径
+            , accept: 'file'
+            , auto: true
             , done: function (res) {
-                layer.msg('上传成功');
                 console.log(res);
+                if ('{{message}}' === '导入失败') {
+                    layer.msg('上传失败');
+                } else {
+                    // layer.load(1, {time: 10 * 100});
+                    layer.msg('上传成功');
+                    setTimeout("window.location.reload()", 700);
+                }
             }
         });
     });
     layui.use('table', function () {
         var table = layui.table;
         //监听表格复选框选择
-        table.on('checkbox(demo)', function (obj) {
+        table.on('checkbox(table_data)', function (obj) {
             console.log(obj)
         });
-        //监听工具条
-        table.on('tool(demo)', function (obj) {
+        //监听工具条 删除一条数据
+        table.on('tool(table_data)', function (obj) {
             var data = obj.data;
-            if (obj.event === 'detail') {
-                layer.msg('ID：' + data.in_data + ' 的查看操作');
-            } else if (obj.event === 'del') {
+            if (obj.event === 'del') {
                 layer.confirm('真的删除行么', function (index) {
+                    $.ajax({
+                        type: 'post',
+                        url: "{%url 'TestPlatform_User:Delete_Data'%}",
+                        data: {'data_id': data.id},
+                        traditional: true,
+                        async: false,
+                        success: function (result) {
+                        },
+                        error: function (result) {
+                        }
+                    });
                     obj.del();
                     layer.close(index);
                 });
@@ -158,28 +256,32 @@
                 storage['in_url'] = data.in_url;
                 storage['in_data'] = data.in_data;
                 storage['in_type'] = data.in_type;
+                storage['in_data_type'] = data.in_data_type;
                 storage['in_expected_result'] = data.in_expected_result;
             }
         });
 
         var $ = layui.$, active = {
             getCheckData: function () { //获取选中数据
-                var checkStatus = table.checkStatus('idTest')
+                var checkStatus = table.checkStatus('testReload')
                     , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
-            }
-            , getCheckLength: function () { //获取选中数目
-                var checkStatus = table.checkStatus('idTest')
-                    , data = checkStatus.data;
-                layer.msg('选中了：' + data.length + ' 个');
+                var arr = JSON.stringify(data);
+                layer.confirm('是否删除选中的' + data.length + '条数据？', function (index) {
+                    $.ajax({
+                        type: 'post',
+                        url: "{%url 'TestPlatform_User:Batch_Delete'%}",
+                        data: {'arr': arr},
+                        traditional: true,
+                        async: false,
+                    });
+                    window.location.reload();
+                });
             }
             , isAll: function () { //验证是否全选
-                var checkStatus = table.checkStatus('idTest');
+                var checkStatus = table.checkStatus('table_data');
                 layer.msg(checkStatus.isAll ? '全选' : '未全选')
             }
         };
-
-
         $('.demoTable .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
