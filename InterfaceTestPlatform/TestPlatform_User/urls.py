@@ -18,9 +18,11 @@ urlpatterns = [
     path('edit_project/', views.Edit_Project, name='Edit_Project'),
     path('detail_project/', views.Detail_Project, name='Detail_Project'),
     path('delete_data/', views.Delete_Data, name='Delete_Data'),
-    path('update_data/', views.Update_Data, name='Update_Data'),
-    path('batch_delete/', views.Batch_Delete, name='Batch_Delete'),
-    path('select_data/', views.Select_Data, name='Select_Data'),
+    path('delete_pj/', views.Delete_Pj, name='Delete_Pj'),
+    path('update_data_if/', views.Update_Data_If, name='Update_Data_If'),
+    path('batch_delete_if/', views.Batch_Delete_If, name='Batch_Delete_If'),
+    path('batch_delete_pj/', views.Batch_Delete_Pj, name='Batch_Delete_Pj'),
+    path('update_data_pj/', views.Update_Data_Pj, name='Update_Data_Pj'),
 
 
     # path('interface_list/', views.Interface_List, name='Interface_List'),

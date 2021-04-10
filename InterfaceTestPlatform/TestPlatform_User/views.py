@@ -65,6 +65,7 @@ def Project_Info(request):  # 项目列表跳转
 
 
 def Interface_List(request):  # 接口列表跳转
+    
     return render(request, 'Page/Interface_List.html')
 
 
@@ -130,8 +131,14 @@ def Delete_Data(request):  # 删除接口信息
         models.Interface_Data.objects.filter(id=data_id).delete()
     return render(request, 'Page/Interface_List.html')
 
+def Delete_Pj(request):
+    if request.method == "POST":
+        data_id = request.POST.get('data_id')  # 获取前端ajax传入的值
+        models.Project_Data.objects.filter(id=data_id).delete()
+    return render(request, 'Page/Interface_List.html')
 
-def Batch_Delete(request):  # 批量删除接口信息
+
+def Batch_Delete_If(request):  # 批量删除接口信息
     if request.method == "POST":
         arr = request.POST.get('arr')  # 获得前端JSON.stringify(data);传回的一个列表
         data = json.loads(arr)  # 将获得到的json数据转化成python类型数据（列表中包含多个字典 type(data)为列表）
@@ -146,7 +153,22 @@ def Batch_Delete(request):  # 批量删除接口信息
     return render(request, 'Page/Interface_List.html')
 
 
-def Update_Data(request):  # 修改接口信息
+def Batch_Delete_Pj(request):  # 批量删除接口信息
+    if request.method == "POST":
+        arr = request.POST.get('arr')  # 获得前端JSON.stringify(data);传回的一个列表
+        data = json.loads(arr)  # 将获得到的json数据转化成python类型数据（列表中包含多个字典 type(data)为列表）
+        id_arr = []  # 创建一个列表存放解析出来的id
+        for i in data:  # 获得列表中的每个字典
+            for key, value in i.items():  # 获取字典中的每个字段及value
+                if key == 'id':  # 只把id存入id_arr列表中
+                    id_arr.append(value)
+        for j in id_arr:  # 循环列表按照id值进行删除操作
+            models.Project_Data.objects.filter(id=j).delete()
+        return render(request, 'Page/Interface_List.html')
+    return render(request, 'Page/Interface_List.html')
+
+
+def Update_Data_If(request):  # 修改接口信息
     if request.method == "POST":
         id = request.POST.get('data_id')
         field = request.POST.get('field')
@@ -170,19 +192,22 @@ def Update_Data(request):  # 修改接口信息
     return render(request, 'Page/Interface_List.html')
 
 
-def Select_Data(request):
-    if request.method == 'POST':
-        in_id = request.POST.get('searchData')
-        print(in_id)
-        models.Interface_Data.objects.filter(in_id=in_id)   # QuerySet结果集，不能直接使用json.dumps序列化
-        # json_list = []
-        # for i in get_data:
-        #     json_dict = {}
-        #     json_dict['in_id'] = i.in_id
-        #     json_list.append(json_dict)
-        # print(json_list)
-        # return JsonResponse(json_list,safe=False)
-    return render(request, 'Page/Interface_List.html')
+def Update_Data_Pj(request):  # 修改项目信息
+    if request.method == "POST":
+        id = request.POST.get('data_id')
+        field = request.POST.get('field')
+        value = request.POST.get('value')
+        if field == 'pj_id':
+            models.Project_Data.objects.filter(id=id).update(pj_id=value)
+        elif field == 'pj_name':
+            models.Project_Data.objects.filter(id=id).update(pj_name=value)
+        elif field == 'pj_pname':
+            models.Project_Data.objects.filter(id=id).update(pj_pname=value)
+        elif field == 'pj_tname':
+            models.Project_Data.objects.filter(id=id).update(pj_tname=value)
+        else:
+            models.Project_Data.objects.filter(id=id).update(pj_state=value)
+        return render(request, 'Page/Interface_List.html')
 
 
 def UploadExcel(request):

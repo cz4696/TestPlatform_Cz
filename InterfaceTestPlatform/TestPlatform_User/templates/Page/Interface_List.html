@@ -31,7 +31,6 @@
                     <dl class="layui-nav-child">
                         <dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>
                         <dd><a href="{%url 'TestPlatform_User:Project_Info'%}">项目信息</a></dd>
-                        <dd><a href="/">项目成员</a></dd>
                     </dl>
                 <li class="layui-nav-item">
                     <a href="javascript:;">接口管理</a>
@@ -71,8 +70,6 @@
                     style="float: right;margin-right: 20px">新增用例
             </button>
         </div>
-        <!--<form class="layui-form layui-form-pane" action="{%url 'TestPlatform_User:Select_Data'%}" method="POST">-->
-        <!--{% csrf_token %}-->
         <div class="demoTable" style="margin-top: -38px; margin-left: 100px">
             <div class="layui-inline ">
                 <input type="text" class="layui-input" name="id" placeholder="输入关键字"
@@ -80,14 +77,13 @@
             </div>
             <button class="layui-btn" data-type="reload" style="margin-left: 50px;">搜索</button>
         </div>
-        <!--</form>-->
 
         <table class="layui-hide" id="table_data" lay-filter="table_data"></table>
         <script type="text/html" id="toolbar">
-            <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="perform"
-               href="{%url 'TestPlatform_User:Interface_Perform'%}">执行</a>
-            <a class="layui-btn layui-btn-xs" lay-event="edit"
+            <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="edit"
                href="{%url 'TestPlatform_User:Edit_Project'%}">修改</a>
+            <a class="layui-btn layui-btn-xs" lay-event="perform"
+               href="{%url 'TestPlatform_User:Interface_Perform'%}">执行</a>
             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
         </script>
     </div>
@@ -119,7 +115,7 @@
             layer.confirm('确定将信息修改为：' + value, function (index) {
                 $.ajax({
                     type: 'post',
-                    url: "{%url 'TestPlatform_User:Update_Data'%}",
+                    url: "{%url 'TestPlatform_User:Update_Data_If'%}",
                     data: {'data_id': data.id, 'field': field, 'value': value},
                     traditional: true,
                     async: false,
@@ -178,7 +174,7 @@
                 var demoReload = $('#demoReload');
                 if (demoReload.val() === "") {
                     location.reload();
-                }else {
+                } else {
                     //执行重载
                     table.reload('testReload', {
                         page: {
@@ -189,6 +185,21 @@
                         }
                     });
                 }
+            },
+            getCheckData: function () { //获取选中数据
+                var checkStatus = table.checkStatus('testReload')
+                    , data = checkStatus.data;
+                var arr = JSON.stringify(data);
+                layer.confirm('是否删除选中的' + data.length + '条数据？', function (index) {
+                    $.ajax({
+                        type: 'post',
+                        url: "{%url 'TestPlatform_User:Batch_Delete_If'%}",
+                        data: {'arr': arr},
+                        traditional: true,
+                        async: false,
+                    });
+                    window.location.reload();
+                });
             }
         };
 
@@ -255,28 +266,6 @@
                 storage['in_data_type'] = data.in_data_type;
                 storage['in_expected_result'] = data.in_expected_result;
             }
-        });
-
-        var $ = layui.$, active = {
-            getCheckData: function () { //获取选中数据
-                var checkStatus = table.checkStatus('table_data')
-                    , data = checkStatus.data;
-                var arr = JSON.stringify(data);
-                layer.confirm('是否删除选中的' + data.length + '条数据？', function (index) {
-                    $.ajax({
-                        type: 'post',
-                        url: "{%url 'TestPlatform_User:Batch_Delete'%}",
-                        data: {'arr': arr},
-                        traditional: true,
-                        async: false,
-                    });
-                    window.location.reload();
-                });
-            }
-        };
-        $('.demoTable .layui-btn').on('click', function () {
-            var type = $(this).data('type');
-            active[type] ? active[type].call(this) : '';
         });
     });
 
