@@ -60,12 +60,26 @@ def Project_List(request):  # 项目列表跳转
     return render(request, 'Page/Project_List.html')
 
 
-def Project_Info(request):  # 项目列表跳转
+def Project_Info(request):  # 项目信息跳转
+    if request.method == "POST":
+        data_id = request.POST.get('data_id')
+        print(data_id)
+        status_arr = []
+        inter_data = models.Interface_Data.objects.all().values()
+        data_list = list(inter_data)
+        for i in data_list:  # 获得列表中的每个字典
+            for key, value in i.items():  # 获取字典中的每个字段及value
+                if key == 'status':  # 只把status存入status_arr列表中
+                    if value is not None and str(value) == data_id:
+                        status_arr.append(i)
     return render(request, 'Page/Project_Info.html')
 
 
 def Interface_List(request):  # 接口列表跳转
-    
+    # if request.method == "POST":
+    #     data_id = request.POST.get('data_id')
+    #
+    #     pass
     return render(request, 'Page/Interface_List.html')
 
 
@@ -239,6 +253,48 @@ def UploadExcel(request):
                                                        in_tname=in_tname,
                                                        in_expected_result=in_expected_result,
                                                        in_actual_result=in_actual_result)
+                        add_interface.save()
+
+            except:
+                logger.error('解析excel文件或者数据插入错误')
+            return HttpResponse(json.dumps(data_list), {'message': '导入成功'})
+            # return render(request, 'Page/Interface_List.html', {'message': '导入成功'})
+        else:
+            logger.error('上传文件类型错误！')
+            return render(request, 'Page/Interface_List.html', {'message': '导入失败'})
+
+
+def Pj_UploadExcel(request):
+    id = request.POST.get('id')
+    if request.method == 'POST':
+        f = request.FILES.get('file')
+        excel_type = f.name.split('.')[1]
+        if excel_type in ['xlsx', 'xls']:
+            # 开始解析上传的excel表格
+            wb = xlrd.open_workbook(filename=None, file_contents=f.read())
+            table = wb.sheets()[0]
+            rows = table.nrows  # 总行数
+            data_list = []  # 获取表中数据
+            try:
+                for i in range(rows):
+                    if i != 0:
+                        data_list.append(table.row_values(i))
+                        in_id = data_list[i - 1][0]
+                        in_mname = data_list[i - 1][1]
+                        in_type = data_list[i - 1][2]
+                        in_url = data_list[i - 1][3]
+                        in_data_type = data_list[i - 1][4]
+                        in_data = data_list[i - 1][5]
+                        in_tname = data_list[i - 1][6]
+                        in_expected_result = data_list[i - 1][7]
+                        in_actual_result = data_list[i - 1][8]
+                        add_interface = Interface_Data(in_id=in_id, in_mname=in_mname, in_type=in_type,
+                                                       in_url=in_url,
+                                                       in_data_type=in_data_type, in_data=in_data,
+                                                       in_tname=in_tname,
+                                                       in_expected_result=in_expected_result,
+                                                       in_actual_result=in_actual_result,
+                                                       status=id)
                         add_interface.save()
 
             except:

@@ -146,7 +146,7 @@
 
         table.render({
             elem: '#table_data'	//表单ID
-            , url: "{%url 'Api:get_inter_data'%}"	//数据接口
+            , url: "{%url 'Api:project_data'%}"	//数据接口
             , page: true			//分页设置
             , limit: 20		//默认每一页显示数量
             , limits: [10, 20, 30, 40, 50]		//可选择每页显示的数量
@@ -181,7 +181,6 @@
                     "count": res.count, //解析数据长度
                     "data": result //解析数据列表
                 };
-
             }
         });
         var $ = layui.$, active = {
@@ -229,11 +228,16 @@
     layui.use('upload', function () {
         var $ = layui.jquery
             , upload = layui.upload;
+        var storage = window.sessionStorage;
+        id = storage.id;
         upload.render({
             elem: '#upload'
-            , url: "{% url 'TestPlatform_User:UploadExcel' %}" //改成自己的上传路径
+            , url: "{% url 'TestPlatform_User:Pj_UploadExcel' %}" //改成自己的上传路径
             , accept: 'file'
             , auto: true
+            ,data:{     //layui upload传参方式
+                id : id
+            }
             , done: function (res) {
                 console.log(res);
                 if ('{{message}}' === '导入失败') {

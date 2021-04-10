@@ -79,8 +79,8 @@
 
         <table class="layui-hide" id="table_data" lay-filter="table_data"></table>
         <script type="text/html" id="toolbar">
-            <a class="layui-btn layui-btn-xs" lay-event="edit"
-               href="{%url 'TestPlatform_User:Project_Info'%}">添加接口</a>
+            <a class="layui-btn layui-btn-xs" lay-event="add"
+               href="{%url 'TestPlatform_User:Project_Info' %}">添加接口</a>
             <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="perform"
                href="">生成报告</a>
             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
@@ -258,15 +258,23 @@
                     obj.del();
                     layer.close(index);
                 });
-            } else if (obj.event === 'edit') {
+            } else if (obj.event === 'add') {
+                $.ajax({
+                    type: 'POST',
+                    url: "{%url 'Api:project_data' %}",
+                    data: {'data_id': data.id,},
+                    traditional: true,
+                    async: false,
+                    success: function (result) {
+                    },
+                    error: function (result) {
+                    }
+                });
+                var storage = window.sessionStorage;
+                storage['id'] = data.id;
 
             } else if (obj.event === 'perform') {  //选中一条数据点击执行，使用sessionStorage存储数据
-                // var storage = window.sessionStorage;
-                // storage['in_url'] = data.in_url;
-                // storage['in_data'] = data.in_data;
-                // storage['in_type'] = data.in_type;
-                // storage['in_data_type'] = data.in_data_type;
-                // storage['in_expected_result'] = data.in_expected_result;
+
             }
         });
     });

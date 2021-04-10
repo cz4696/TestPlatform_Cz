@@ -24,6 +24,7 @@ class Interface_Data(models.Model):
     in_tname = models.CharField(max_length=10)
     in_expected_result = models.CharField(max_length=20)
     in_actual_result = models.CharField(max_length=20)
+    status = models.IntegerField()
 
 # def __unicode__(self):
 #     return self.pj_id
