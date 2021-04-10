@@ -63,22 +63,24 @@
     <!--<div style="margin-left: 200px;">-->
     <div style="padding: 30px; background-color: #F2F2F2;">
         <div class="layui-upload demoTable ">
-            <div class="demoTable">
             <button type="button" class="layui-btn" id="upload" name="file"><i class="layui-icon"></i>上传用例</button>
-                <div class="layui-inline ">
-                    <input class="layui-input" name="id" id="demoReload" autocomplete="off" style="margin-left: 50px;">
-                </div>
-                <button class="layui-btn" data-type="reload" style="margin-left: 50px;">搜索</button>
-                <button type="button" class="layui-btn layui-btn-danger" id="batchDelete" data-type="getCheckData"
-                        style="float: right; margin-right: 20px">批量删除
-                </button>
-                <button type="button" class="layui-btn layui-btn-warm" id="addInterface"
-                        style="float: right;margin-right: 20px">新增用例
-                </button>
-            </div>
-
+            <button type="button" class="layui-btn layui-btn-danger" id="batchDelete" data-type="getCheckData"
+                    style="float: right; margin-right: 20px">批量删除
+            </button>
+            <button type="button" class="layui-btn layui-btn-warm" id="addInterface"
+                    style="float: right;margin-right: 20px">新增用例
+            </button>
         </div>
-
+        <!--<form class="layui-form layui-form-pane" action="{%url 'TestPlatform_User:Select_Data'%}" method="POST">-->
+        <!--{% csrf_token %}-->
+        <div class="demoTable" style="margin-top: -38px; margin-left: 100px">
+            <div class="layui-inline ">
+                <input type="text" class="layui-input" name="id" placeholder="输入关键字"
+                       title="可根据id、接口名称、测试人员关键字进行搜索" id="demoReload" autocomplete="off" style="margin-left: 50px;">
+            </div>
+            <button class="layui-btn" data-type="reload" style="margin-left: 50px;">搜索</button>
+        </div>
+        <!--</form>-->
 
         <table class="layui-hide" id="table_data" lay-filter="table_data"></table>
         <script type="text/html" id="toolbar">
@@ -130,13 +132,13 @@
                 layer.close(index);
             });
         });
+
         table.render({
             elem: '#table_data'	//表单ID
-            , url: 'http://localhost:8000/api/get_inter_data/'	//数据接口
+            , url: "{%url 'Api:get_inter_data'%}"	//数据接口
             , page: true			//分页设置
             , limit: 20		//默认每一页显示数量
             , limits: [10, 20, 30, 40, 50]		//可选择每页显示的数量
-            , id: 'testReload'
             , cols: [[			//表格列
                 {type: 'checkbox', sort: false}
                 , {field: 'in_id', title: 'ID', align: 'center', width: 70, sort: true, edit: 'int'}
@@ -152,6 +154,7 @@
             , response: {
                 statusCode: 200
             }
+            , id: 'testReload'
             , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据，res为从url中get到的数据
                 var result;
                 // console.log(this);
@@ -173,35 +176,28 @@
         var $ = layui.$, active = {
             reload: function () {
                 var demoReload = $('#demoReload');
-                $.ajax({
-                    type: 'post',
-                    url: "{%url 'TestPlatform_User:Select_Data'%}",
-                    data: {'id':demoReload.val()},
-                    traditional: true,
-                    async: false,
-                    success: function (result) {
-                    },
-                    error: function (result) {
-                    }
-                });
-                //执行重载
-                table.reload('testReload', {
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                    , where: {
-                        key: {
-                            in_id: demoReload.val()
+                if (demoReload.val() === "") {
+                    location.reload();
+                }else {
+                    //执行重载
+                    table.reload('testReload', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
                         }
-                    }
-                });
+                        , where: {
+                            id: demoReload.val(),
+                        }
+                    });
+                }
             }
         };
+
         $('.demoTable .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
     });
+
 
     //上传功能
     layui.use('upload', function () {
@@ -263,7 +259,7 @@
 
         var $ = layui.$, active = {
             getCheckData: function () { //获取选中数据
-                var checkStatus = table.checkStatus('testReload')
+                var checkStatus = table.checkStatus('table_data')
                     , data = checkStatus.data;
                 var arr = JSON.stringify(data);
                 layer.confirm('是否删除选中的' + data.length + '条数据？', function (index) {
@@ -277,16 +273,13 @@
                     window.location.reload();
                 });
             }
-            , isAll: function () { //验证是否全选
-                var checkStatus = table.checkStatus('table_data');
-                layer.msg(checkStatus.isAll ? '全选' : '未全选')
-            }
         };
         $('.demoTable .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
     });
+
 </script>
 </body>
 </html>

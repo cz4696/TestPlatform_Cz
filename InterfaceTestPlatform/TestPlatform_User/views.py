@@ -4,7 +4,7 @@ from venv import logger
 import yagmail
 from django.db import transaction
 from django.shortcuts import render, redirect
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login, logout  # 从app导入
 from django.contrib.auth.forms import UserCreationForm  # 自带创建用户表单，注册
 import xlrd, xlwt, json, sys
@@ -172,9 +172,16 @@ def Update_Data(request):  # 修改接口信息
 
 def Select_Data(request):
     if request.method == 'POST':
-        in_id = request.POST.get('id')
+        in_id = request.POST.get('searchData')
         print(in_id)
-        models.Interface_Data.objects.get(in_id=int(in_id))
+        models.Interface_Data.objects.filter(in_id=in_id)   # QuerySet结果集，不能直接使用json.dumps序列化
+        # json_list = []
+        # for i in get_data:
+        #     json_dict = {}
+        #     json_dict['in_id'] = i.in_id
+        #     json_list.append(json_dict)
+        # print(json_list)
+        # return JsonResponse(json_list,safe=False)
     return render(request, 'Page/Interface_List.html')
 
 
