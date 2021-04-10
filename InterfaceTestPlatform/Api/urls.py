@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.urls import path, include
 
-from Api import views
+from . import views
 
 app_name = 'Api'  # 声明app
 urlpatterns = [
