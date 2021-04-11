@@ -12,7 +12,6 @@ import requests
 from idna import unicode
 from . import Import_Excel, models
 from .models import Project_Data, Interface_Data
-from pygments import highlight, lexers, formatters
 import datetime, time
 
 
@@ -61,25 +60,14 @@ def Project_List(request):  # 项目列表跳转
 
 
 def Project_Info(request):  # 项目信息跳转
-    if request.method == "POST":
-        data_id = request.POST.get('data_id')
-        print(data_id)
-        status_arr = []
-        inter_data = models.Interface_Data.objects.all().values()
-        data_list = list(inter_data)
-        for i in data_list:  # 获得列表中的每个字典
-            for key, value in i.items():  # 获取字典中的每个字段及value
-                if key == 'status':  # 只把status存入status_arr列表中
-                    if value is not None and str(value) == data_id:
-                        status_arr.append(i)
-    return render(request, 'Page/Project_Info.html')
+    pj_name = request.POST.get('pj_name')
+    if pj_name!=None:
+        global pjName
+        pjName = pj_name
+    return render(request, 'Page/Project_Info.html',{'pj_name':pjName})
 
 
 def Interface_List(request):  # 接口列表跳转
-    # if request.method == "POST":
-    #     data_id = request.POST.get('data_id')
-    #
-    #     pass
     return render(request, 'Page/Interface_List.html')
 
 
@@ -145,10 +133,18 @@ def Delete_Data(request):  # 删除接口信息
         models.Interface_Data.objects.filter(id=data_id).delete()
     return render(request, 'Page/Interface_List.html')
 
-def Delete_Pj(request):
+
+def Delete_Pj(request):  # 删除项目信息及项目下的接口信息
     if request.method == "POST":
         data_id = request.POST.get('data_id')  # 获取前端ajax传入的值
         models.Project_Data.objects.filter(id=data_id).delete()
+        data_list = models.Interface_Data.objects.all().values()
+        for i in data_list:  # 获得列表中的每个字典
+            for key, value in i.items():  # 获取字典中的每个字段及value
+                if key == 'status' and str(value) == data_id and value is not None:  # 只把status存入status_arr列表中
+                    models.Interface_Data.objects.filter(status=data_id).delete()  # 当删除项目时将项目下的接口信息一同删除
+                else:
+                    continue
     return render(request, 'Page/Interface_List.html')
 
 

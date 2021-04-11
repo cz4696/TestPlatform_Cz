@@ -56,6 +56,7 @@ def project_data(request):
     data_list = list(inter_data)
     status_arr = []  # 创建一个列表存放解析出来的status
     data_id = request.POST.get('data_id')
+    in_id = request.GET.get('id')
     if data_id != None:
         global new_data_id
         new_data_id = data_id
@@ -66,4 +67,20 @@ def project_data(request):
             else:
                 continue
     data_list = {"code": 200, "msg": "ok", "count": len(status_arr), "data": status_arr}
-    return HttpResponse(json.dumps(data_list))
+    # return HttpResponse(json.dumps(data_list))
+    if in_id == None:
+        return HttpResponse(json.dumps(data_list))
+    else:
+        data = data_list['data']
+        search_data = []
+        for i in data:  # 获得列表中的每个字典
+            for key, value in i.items():
+                if key == 'in_id' and value == int(in_id):
+                    search_data.append(i)
+        if search_data != []:
+            data_list = {"code": 200, "msg": "ok", "count": len(search_data), "data": search_data}
+            return HttpResponse(json.dumps(data_list))
+        else:
+            data_list = {"msg": "没有查询到该条数据！", "count": 0, "data": ''}
+            return HttpResponse(json.dumps(data_list))
+
