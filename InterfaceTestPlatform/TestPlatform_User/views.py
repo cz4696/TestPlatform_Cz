@@ -1,6 +1,6 @@
 import ast
+from string import Template
 from venv import logger
-
 import yagmail
 from django.db import transaction
 from django.shortcuts import render, redirect
@@ -10,9 +10,16 @@ from django.contrib.auth.forms import UserCreationForm  # 自带创建用户表�
 import xlrd, xlwt, json, sys
 import requests
 from idna import unicode
-from . import Import_Excel, models
+from . import models
 from .models import Project_Data, Interface_Data
 import datetime, time
+import unittest
+import time
+import os
+from . import HTMLTestRunnerCN
+
+
+# from .test_case import suite
 
 
 # Create your views here.
@@ -61,10 +68,11 @@ def Project_List(request):  # 项目列表跳转
 
 def Project_Info(request):  # 项目信息跳转
     pj_name = request.POST.get('pj_name')
-    if pj_name!=None:
+    if pj_name != None:
         global pjName
         pjName = pj_name
-    return render(request, 'Page/Project_Info.html',{'pj_name':pjName})
+        return render(request, 'Page/Project_Info.html', {'pj_name': pjName})
+    return render(request, 'Page/Project_Info.html', {'pj_name': pjName})
 
 
 def Interface_List(request):  # 接口列表跳转
@@ -161,6 +169,28 @@ def Batch_Delete_If(request):  # 批量删除接口信息
             models.Interface_Data.objects.filter(id=j).delete()
         return render(request, 'Page/Interface_List.html')
     return render(request, 'Page/Interface_List.html')
+
+
+def Batch_Perform_If(request):  # 批量执行功能
+    if request.method == "POST":
+        arr = request.POST.get('arr')
+        data = json.loads(arr)
+        for i in data:  # 获得列表中的每个字典
+            if i['in_type'].upper() == 'POST':
+                res = requests.post(url=i['in_url'], data=i['in_data'],
+                                    json=json.dumps(i['in_data']))  # 接口执行方法 使用requests库处理接口
+                models.Interface_Data.objects.filter(id=i['id']).update(
+                    in_actual_result=res.status_code)  # res.status_code获取code对应value值
+                continue
+            elif i['in_type'].upper() == 'GET':
+                res = requests.get(url=i['in_url'], params=i['in_data'])
+                models.Interface_Data.objects.filter(id=i['id']).update(in_actual_result=res.status_code)
+                continue
+        return render(request, 'Page/Perform_Result.html')
+
+
+def Perform_Result2(request):
+    return render(request, 'Page/Perform_Result.html')
 
 
 def Batch_Delete_Pj(request):  # 批量删除接口信息
@@ -324,3 +354,85 @@ def Edit_Project(request):
 
 def Detail_Project(request):
     return render(request, 'Page/Detail_Project.html')
+
+
+def Report(request):
+    if request.method == "POST":  # 点击生成报告，全选需要生成报告的接口，将接口数据传递到这，进行处理
+        arr = request.POST.get('arr')
+        data = json.loads(arr)
+        for i in data:
+            if i['in_type'].upper() == 'POST':
+                tplFilePath = r'/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/templates/File/Template_Post.py'
+                path = r'/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/templates/File/'
+                ClassNameList = []
+                UrlList = []
+                DataList = []
+                ClassNameList.append(i['in_mname'])
+                UrlList.append(i['in_url'])
+                DataList.append(i['in_data'])
+                for className in ClassNameList:
+                    for urlName in UrlList:
+                        for dataList in DataList:
+                            now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                            filename = 'test_' + str(className) + '.py'  # 必须要以test为开头
+                            tplFile = open(tplFilePath)
+                            gFile = open(path + filename, "w")
+                            lines = []
+                            tpl = Template(tplFile.read())
+                            lines.append(tpl.substitute(
+                                now=now,
+                                ClassName=className,
+                                UrlName=urlName,
+                                Data=dataList,
+                            ))
+                            gFile.writelines(lines)
+                            tplFile.close()
+                            gFile.close()
+                            print('%s文件创建完成' % filename)
+                            continue
+            elif i['in_type'].upper() == 'GET':
+                tplFilePath = r'/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/templates/File/Template_Get.py'
+                path = r'/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/templates/File/'
+                ClassNameList = []
+                UrlList = []
+                DataList = []
+                ClassNameList.append(i['in_mname'])
+                UrlList.append(i['in_url'])
+                DataList.append(i['in_data'])
+                for className in ClassNameList:
+                    for params in DataList:
+                        for urlName in UrlList:
+                            now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                            filename = 'test_' + str(className) + '.py'  # 必须要以test为开头
+                            tplFile = open(tplFilePath)
+                            gFile = open(path + filename, "w")
+                            lines = []
+                            tpl = Template(tplFile.read())
+                            lines.append(tpl.substitute(
+                                now=now,
+                                ClassName=className,
+                                Params=params,
+                                UrlName=urlName,
+                            ))
+                            gFile.writelines(lines)
+                            tplFile.close()
+                            gFile.close()
+                            print('%s文件创建完成' % filename)
+                            continue
+    test_dir = '/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/templates/File'
+    filepath = '/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/report/TestReport.html'
+
+    def allcase():
+        discover = unittest.defaultTestLoader.discover(test_dir, pattern="test*.py")
+        # discover方法筛选出来的用例，循环添加到测试套件中
+        suite = unittest.TestSuite()
+        suite.addTest(discover)
+        print(discover)
+        return suite
+
+    fp = open(filepath, 'wb')
+    # 定义测试报告的标题与描述
+    runner = HTMLTestRunnerCN.HTMLTestReportCN(stream=fp, title=u'测试报告', description=u'测试报告描述')
+    runner.run(allcase())
+    fp.close()
+    return render(request, 'Page/Perform_Result.html')

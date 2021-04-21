@@ -44,7 +44,7 @@
                 <li class="layui-nav-item"><a href="">邮件配置</a></li>
                 <li class="layui-nav-item"><a href="">权限管理</a></li>
                 <li class="layui-nav-item" style="float: right">
-                    <a href="javascript:;">{{ user.get_username }}</a>
+                    <a href="javascript:;"><i class="layui-icon">&#xe66f;</i> {{ user.get_username }}</a>
                     <dl class="layui-nav-child">
                         <dd><a href="">个人中心</a></dd>
                         <dd><a href="{%url 'TestPlatform_User:Logout'%}">登出</a></dd>
@@ -64,10 +64,13 @@
         <div class="layui-upload demoTable ">
             <button type="button" class="layui-btn" id="upload" name="file"><i class="layui-icon"></i>上传用例</button>
             <button type="button" class="layui-btn layui-btn-danger" id="batchDelete" data-type="getCheckData"
-                    style="float: right; margin-right: 20px">批量删除
+                    style="float: right; margin-right: 20px"><i class="layui-icon">&#xe640;</i>批量删除
             </button>
-            <button type="button" class="layui-btn layui-btn-warm" id="addInterface"
-                    style="float: right;margin-right: 20px">新增用例
+            <button type="button" class="layui-btn layui-btn-normal" id="addInterface" onclick="addInterface()"
+                    style="float: right;margin-right: 20px"><i class="layui-icon">&#xe608;</i>新增用例
+            </button>
+            <button type="button" class="layui-btn layui-btn-primary layui-border-green" id="batchPerform" data-type="batchPerform"
+                    style="float: right; margin-right: 20px"><i class="layui-icon">&#xe605;</i>批量执行
             </button>
         </div>
         <div class="demoTable" style="margin-top: -38px; margin-left: 100px">
@@ -78,7 +81,7 @@
             <button class="layui-btn" data-type="reload" style="margin-left: 50px;">搜索</button>
         </div>
 
-        <table class="layui-hide" id="table_data" lay-filter="table_data"></table>
+        <table class="layui-hide layui-table" id="table_data" lay-filter="table_data"></table>
         <script type="text/html" id="toolbar">
             <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="edit"
                href="{%url 'TestPlatform_User:Edit_Project'%}">修改</a>
@@ -128,7 +131,6 @@
                 layer.close(index);
             });
         });
-
         table.render({
             elem: '#table_data'	//表单ID
             , url: "{%url 'Api:get_inter_data'%}"	//数据接口
@@ -165,7 +167,9 @@
                     "data": result //解析数据列表
                 };
             }
+
         });
+
         var $ = layui.$, active = {
             reload: function () {
                 var demoReload = $('#demoReload');
@@ -187,10 +191,10 @@
                 var checkStatus = table.checkStatus('testReload')
                     , data = checkStatus.data;
                 var arr = JSON.stringify(data);
-                    if (data.length === 0){
-                        layer.msg('请选择需要删除的数据！')
-                    }else {
-                        layer.confirm('是否删除选中的' + data.length + '条数据？', function (index) {
+                if (data.length === 0) {
+                    layer.msg('请选择需要删除的数据！')
+                } else {
+                    layer.confirm('是否删除选中的' + data.length + '条数据？', function (index) {
                         $.ajax({
                             type: 'post',
                             url: "{%url 'TestPlatform_User:Batch_Delete_If'%}",
@@ -199,8 +203,27 @@
                             async: false,
                         });
                         window.location.reload();
+                    });
+                }
+            }
+            ,batchPerform: function () {
+                var checkStatus = table.checkStatus('testReload')
+                    , data = checkStatus.data;
+                var arr = JSON.stringify(data);
+                if (data.length === 0) {
+                    layer.msg('请选择需要执行的数据！')
+                } else {
+                    layer.confirm('是否执行选中的' + data.length + '条数据？', function (index) {
+                        $.ajax({
+                            type: 'post',
+                            url: "{%url 'TestPlatform_User:Batch_Perform_If'%}",
+                            data: {'arr': arr},
+                            traditional: true,
+                            async: false,
                         });
-                    }
+                        window.location.reload();
+                    });
+                }
             }
         };
 
@@ -269,6 +292,27 @@
             }
         });
     });
+
+    function addInterface() {
+        var table = layuiTable.checkStatus("table_data").data;
+        var demo = [];
+        for (var i = 0; i < table.length; i++) {
+            demo.push(table[i]);
+        }
+        demo.push({
+            "in_id": "",
+            "in_mname": "",
+            "in_type": "",
+            "in_url": "",
+            "in_data": "",
+            "in_data_type": "",
+            "in_tname": "",
+            "in_expected_result": "",
+        });
+        layuiTable.reload("table_data", {
+            data: demo
+        })
+    }
 
 </script>
 </body>

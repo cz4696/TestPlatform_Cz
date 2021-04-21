@@ -53,31 +53,34 @@
         </div>
     </div>
     <div style="padding: 30px; background-color: #F2F2F2;">
-
         <div class="layui-upload demoTable ">
-            <button type="button" class="layui-btn" id="upload" name="file"><i class="layui-icon"></i>上传用例</button>
+            <button type="button" class="layui-btn" id="upload" name="file" style="margin-bottom: 7px"><i class="layui-icon"></i>上传用例</button>
             <button type="button" class="layui-btn layui-btn-danger" id="batchDelete" data-type="getCheckData"
                     style="float: right; margin-right: 20px">批量删除
             </button>
             <button type="button" class="layui-btn layui-btn-warm" id="addInterface"
                     style="float: right;margin-right: 20px">新增用例
             </button>
-            <div style="text-align: center;margin-top: -40px;margin-left: 237px;"><h1>{{ pj_name }}</h1></div>
+            <button type="button" class="layui-btn layui-btn-primary layui-border-green" id="batchPerform"
+                    data-type="batchPerform"
+                    style="float: right; margin-right: 20px"><i class="layui-icon">&#xe605;</i>批量执行
+            </button>
+            <div style="text-align: center;margin-top: -40px;margin-left: 237px;"><h1>{{pj_name}}</h1></div>
         </div>
         <div class="demoTable" style="margin-top: -38px; margin-left: 100px">
             <div class="layui-inline ">
                 <input type="text" class="layui-input" name="id" placeholder="输入关键字"
-                       title="可根据id进行搜索" id="demoReload" autocomplete="off" style="margin-left: 50px;">
+                       title="可根据id进行搜索" id="demoReload" autocomplete="off" style="margin-left: 50px;margin-bottom: 2px">
             </div>
             <button class="layui-btn" data-type="reload" style="margin-left: 50px;">搜索</button>
         </div>
 
         <table class="layui-hide" id="table_data" lay-filter="table_data"></table>
         <script type="text/html" id="toolbar">
-            <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="edit"
-               href="{%url 'TestPlatform_User:Edit_Project'%}">修改</a>
             <a class="layui-btn layui-btn-xs" lay-event="perform"
                href="{%url 'TestPlatform_User:Interface_Perform'%}">执行</a>
+            <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="edit"
+               href="{%url 'TestPlatform_User:Edit_Project'%}">修改</a>
             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
         </script>
     </div>
@@ -196,6 +199,31 @@
                         });
                         window.location.reload();
                     });
+                }
+            }
+            , batchPerform: function () {
+                var checkStatus = table.checkStatus('testReload')
+                    , data = checkStatus.data;
+                var arr = JSON.stringify(data);
+                if (data.length === 0) {
+                    layer.msg('请选择需要执行的数据！')
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: "{%url 'TestPlatform_User:Batch_Perform_If'%}",
+                        data: {'arr': arr},
+                        traditional: true,
+                        async: false,
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: "{%url 'Api:perform_data'%}",
+                        data: {'arr': arr},
+                        traditional: true,
+                        async: false,
+                    });
+                    window.location = "http://localhost:8000/perform_result2/";
+                    // window.location.reload();
                 }
             }
         };

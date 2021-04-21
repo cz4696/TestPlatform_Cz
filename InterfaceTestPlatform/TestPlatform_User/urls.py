@@ -24,4 +24,7 @@ urlpatterns = [
     path('batch_delete_pj/', views.Batch_Delete_Pj, name='Batch_Delete_Pj'),
     path('update_data_pj/', views.Update_Data_Pj, name='Update_Data_Pj'),
     path('pj_uploadexcel/', views.Pj_UploadExcel, name='Pj_UploadExcel'),
+    path('batch_perform_if/', views.Batch_Perform_If, name='Batch_Perform_If'),
+    path('perform_result2/', views.Perform_Result2, name='Perform_Result2'),
+    path('report/', views.Report, name='Report'),
 ]

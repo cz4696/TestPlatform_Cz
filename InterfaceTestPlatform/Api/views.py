@@ -84,3 +84,25 @@ def project_data(request):
             data_list = {"msg": "没有查询到该条数据！", "count": 0, "data": ''}
             return HttpResponse(json.dumps(data_list))
 
+
+def perform_data(request):
+    inter_data = models.Interface_Data.objects.all().values()
+    data_list = list(inter_data)
+    arr = request.POST.get('arr')
+    data_id = []
+    if arr != None:
+        global arr1
+        arr1 = json.loads(arr)
+    for i in arr1:
+        for j in data_list:
+            if i['id'] == j['id']:
+                data_id.append(j)
+                break
+        continue
+    data_list = {"code": 200, "msg": "ok!", "count": len(data_id), "data": data_id}
+        # return HttpResponse(json.dumps(data_list))
+    return HttpResponse(json.dumps(data_list))
+
+
+
+
