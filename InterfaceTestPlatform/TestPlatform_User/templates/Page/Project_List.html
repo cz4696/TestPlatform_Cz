@@ -29,14 +29,12 @@
                     <a href="javascript:;">项目管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>
-                        <dd><a href="{%url 'TestPlatform_User:Project_Info'%}">项目信息</a></dd>
                     </dl>
                 <li class="layui-nav-item">
                     <a href="javascript:;">接口管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a></dd>
                         <dd><a href="{%url 'TestPlatform_User:Interface_Perform'%}">接口执行</a></dd>
-                        <dd><a href="/">批量接口</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"><a href="">测试报告</a></li>
@@ -113,7 +111,7 @@
                 title: '新增项目',
                 type: 2,
                 skin: 'layui-layer-rim', //加上边框
-                area: ['460px', '500px'], //宽高
+                area: ['460px', '550px'], //宽高
                 fix: true,
                 // btn: ['确认提交', '取消'],
                 shadeClose: true,//点击旁边地方自动关闭
@@ -155,14 +153,16 @@
             , page: true			//分页设置
             , limit: 20		//默认每一页显示数量
             , limits: [10, 20, 30, 40, 50]		//可选择每页显示的数量
+            , toolbar:true
             , cols: [[			//表格列
                 {type: 'checkbox', sort: false}
-                , {field: 'pj_id', title: '项目编号', align: 'center', width: 120, sort: true, edit: 'int'}
-                , {field: 'pj_name', title: '项目名称',align: 'center', width: 200, sort: false, edit: 'text'}
-                , {field: 'pj_pname', title: '项目经理', align: 'center', width: 100, sort: false, edit: 'text'}
-                , {field: 'pj_tname', title: '测试人员',align: 'center', width: 100, sort: false, edit: 'text'}
-                , {field: 'pj_state', title: '状态', align: 'center', width: 100, sort: true}
-                , {field: 'dobar', title: '操作', align: 'center', width:250,sort: false, toolbar: '#toolbar'}
+                , {field: 'pj_id', title: '项目编号', align: 'center', width: 250, sort: true, edit: 'int'}
+                , {field: 'pj_name', title: '项目名称',align: 'center', width: 250, sort: false, edit: 'text'}
+                , {field: 'pj_pname', title: '项目经理', align: 'center', width: 250, sort: false, edit: 'text'}
+                , {field: 'pj_pn', title: '产品经理', align: 'center', width: 250, sort: false, edit: 'text'}
+                , {field: 'pj_tname', title: '测试人员',align: 'center', width: 250, sort: false, edit: 'text'}
+                , {field: 'pj_state', title: '状态', align: 'center', width: 250, sort: true}
+                , {field: 'dobar', title: '操作', align: 'center', width:323,sort: false, toolbar: '#toolbar'}
             ]]
             , response: {
                 statusCode: 200

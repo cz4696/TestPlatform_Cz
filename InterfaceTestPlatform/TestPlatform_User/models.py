@@ -9,6 +9,7 @@ class Project_Data(models.Model):
     pj_id = models.IntegerField()
     pj_name = models.CharField(max_length=10)
     pj_pname = models.CharField(max_length=10)
+    pj_pn = models.CharField(max_length=10)
     pj_tname = models.CharField(max_length=10)
     pj_state = models.CharField(max_length=6)
 

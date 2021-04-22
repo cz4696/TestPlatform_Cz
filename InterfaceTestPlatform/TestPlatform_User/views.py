@@ -127,9 +127,10 @@ def Add_Pj(request):  # 添加部门信息
         pj_id = request.POST.get('pj_id')
         pj_name = request.POST.get('pj_name')
         pj_pname = request.POST.get('pj_pname')
+        pj_pn = request.POST.get('pj_pn')
         pj_tname = request.POST.get('pj_tname')
         pj_state = request.POST.get('pj_state')
-        add_project = Project_Data(pj_id=pj_id, pj_name=pj_name, pj_pname=pj_pname, pj_tname=pj_tname,
+        add_project = Project_Data(pj_id=pj_id, pj_name=pj_name, pj_pname=pj_pname, pj_pn=pj_pn, pj_tname=pj_tname,
                                    pj_state=pj_state)
         add_project.save()
         return HttpResponse()
@@ -189,7 +190,7 @@ def Batch_Perform_If(request):  # 批量执行功能
         return render(request, 'Page/Perform_Result.html')
 
 
-def Perform_Result2(request):
+def Perform_Result(request):
     return render(request, 'Page/Perform_Result.html')
 
 
@@ -362,7 +363,8 @@ def Report(request):
         data = json.loads(arr)
         for i in data:
             if i['in_type'].upper() == 'POST':
-                tplFilePath = r'/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/templates/File/Template_Post.py'
+                # 需要将以下地址换成本地地址
+                tplFilePath = r'/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/Template_Post.py'
                 path = r'/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/templates/File/'
                 ClassNameList = []
                 UrlList = []
@@ -391,7 +393,8 @@ def Report(request):
                             print('%s文件创建完成' % filename)
                             continue
             elif i['in_type'].upper() == 'GET':
-                tplFilePath = r'/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/templates/File/Template_Get.py'
+                # 需要将以下地址换成本地地址
+                tplFilePath = r'/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/Template_Get.py'
                 path = r'/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/templates/File/'
                 ClassNameList = []
                 UrlList = []
@@ -419,7 +422,8 @@ def Report(request):
                             gFile.close()
                             print('%s文件创建完成' % filename)
                             continue
-    test_dir = '/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/templates/File'
+    # 需要将以下地址换成本地地址
+    test_dir = '/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/templates/File/'
     filepath = '/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/report/TestReport.html'
 
     def allcase():
@@ -435,4 +439,10 @@ def Report(request):
     runner = HTMLTestRunnerCN.HTMLTestReportCN(stream=fp, title=u'测试报告', description=u'测试报告描述')
     runner.run(allcase())
     fp.close()
+    # 生成报告后删除对应文件
+    files = os.listdir(test_dir)
+    for i,name in enumerate(files):  #逐个遍历
+        if name.find(".py")>=0 :    #判断文件名称中是否包含py字符
+            os.remove(test_dir+name)    # 删除操作
     return render(request, 'Page/Perform_Result.html')
+

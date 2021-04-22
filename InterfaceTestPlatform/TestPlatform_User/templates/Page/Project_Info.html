@@ -132,6 +132,7 @@
             , page: true			//分页设置
             , limit: 20		//默认每一页显示数量
             , limits: [10, 20, 30, 40, 50]		//可选择每页显示的数量
+            , toolbar:true
             , cols: [[			//表格列
                 {type: 'checkbox', sort: false}
                 , {field: 'in_id', title: 'ID', align: 'center', width: 70, sort: true, edit: 'int'}
@@ -222,7 +223,7 @@
                         traditional: true,
                         async: false,
                     });
-                    window.location = "http://localhost:8000/perform_result2/";
+                    window.location = "http://localhost:8000/perform_result/";
                     // window.location.reload();
                 }
             }
