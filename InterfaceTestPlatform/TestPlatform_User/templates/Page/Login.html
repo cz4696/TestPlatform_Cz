@@ -14,7 +14,7 @@
 </head>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top:10%;padding-left:45%;">
-    <legend>登录界面</legend>
+    <legend>Test Platform</legend>
 </fieldset>
 <div class="center" style="text-align: center; ">
     <h1>　　</h1>
@@ -48,12 +48,22 @@
         </div>
         <div class="layui-form-item">
             <button class="layui-btn layui-btn-radius" type="submit">登 录</button>
-            　　　　　　
-            <a href="{%url 'TestPlatform_User:Register'%}">
-                <button class="layui-btn layui-btn-radius" type="button">注 册</button>
-            </a>
+
+            <button class="layui-btn layui-btn-radius" type="button" onclick="msg()" style="margin-left: 100px">注 册</button>
         </div>
     </form>
 </div>
+{% load static %}
+<script src="{% static '/js/layui.js' %}" charset="utf-8"></script>
+<script type="text/javascript">
+    function msg() {
+        layer.msg('暂未开放该功能！请联系管理员注册账号！', { icon: 4, time: 2000 }, function () {
+            // 关闭弹出层
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        });
+    }
+
+</script>
 </body>
 </html>

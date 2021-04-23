@@ -35,20 +35,20 @@ table       { font-size: 100%; }
 <div class='heading'>
 <h1 style="font-family: Microsoft YaHei">测试报告</h1>
 <p class='attribute'><strong>测试人员 : </strong> QA</p>
-<p class='attribute'><strong>开始时间 : </strong> 2021-04-22 17:20:36</p>
-<p class='attribute'><strong>合计耗时 : </strong> 0:00:08.487849</p>
-<p class='attribute'><strong>测试结果 : </strong> 共 4，通过 1，失败 3，通过率= 25.00%</p>
+<p class='attribute'><strong>开始时间 : </strong> 2021-04-23 08:53:31</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:00.485109</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 1，失败 1，通过率= 0.00%</p>
 
 <p class='description'>测试报告描述</p>
 </div>
 
 
 <p id='show_detail_line'>
-<a class="btn btn-primary" href='javascript:showCase(4)'>概要{ 25.00% }</a>
-<a class="btn btn-success" href='javascript:showCase(0)'>通过{ 1 }</a>
-<a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 3 }</a>
+<a class="btn btn-primary" href='javascript:showCase(4)'>概要{ 0.00% }</a>
+<a class="btn btn-success" href='javascript:showCase(0)'>通过{ 0 }</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 1 }</a>
 <a class="btn btn-warning" href='javascript:showCase(2)'>错误{ 0 }</a>
-<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 4 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 1 }</a>
 </p>
 <table id='result_table' class="table table-condensed table-bordered table-hover">
 <colgroup>
@@ -99,89 +99,13 @@ AssertionError: 200 != 404 : 失败
     </td>
 </tr>
 
-<tr class='danger'>
-    <td>test_测试接口2.test_测试接口2</td>
-    <td class="text-center">1</td>
-    <td class="text-center">0</td>
-    <td class="text-center">1</td>
-    <td class="text-center">0</td>
-    <td class="text-center"><a href="javascript:showClassDetail('c2',1)" class="detail" id='c2'>详细</a></td>
-</tr>
-
-<tr id='ft2_1' class='none'>
-    <td class='failCase'><div class='testcase'>test_测试接口2</div></td>
-    <td colspan='5' align='center'>
-    <!--默认收起output信息 -Findyou
-    <button id='btn_ft2_1' type="button"  class="btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_1'>失败</button>
-    <div id='div_ft2_1' class="collapse">  -->
-    <!-- 默认展开output信息 -Findyou -->
-    <button id='btn_ft2_1' type="button"  class="btn-xs" data-toggle="collapse" data-target='#div_ft2_1'>失败</button>
-    <div id='div_ft2_1' class="collapse in">
-    <pre>
-    
-ft2_1: Traceback (most recent call last):
-  File "/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/templates/File/test_测试接口2.py", line 12, in test_测试接口2
-    self.assertEqual(200,res.status_code,'失败')
-AssertionError: 200 != 404 : 失败
-
-
-    </pre>
-    </div>
-    </td>
-</tr>
-
-<tr class='success'>
-    <td>test_测试接口3.test_测试接口3</td>
-    <td class="text-center">1</td>
-    <td class="text-center">1</td>
-    <td class="text-center">0</td>
-    <td class="text-center">0</td>
-    <td class="text-center"><a href="javascript:showClassDetail('c3',1)" class="detail" id='c3'>详细</a></td>
-</tr>
-
-<tr id='pt3_1' class='hiddenRow'>
-    <td class='passCase'><div class='testcase'>test_测试接口3</div></td>
-    <td colspan='5' align='center'><button id='btn_pt3_1' type="button"  class="btn-xs" disabled="disabled" data-toggle="collapse" data-target='#div_pt3_1'>通过</button></td>
-</tr>
-
-<tr class='danger'>
-    <td>test_测试接口4.test_测试接口4</td>
-    <td class="text-center">1</td>
-    <td class="text-center">0</td>
-    <td class="text-center">1</td>
-    <td class="text-center">0</td>
-    <td class="text-center"><a href="javascript:showClassDetail('c4',1)" class="detail" id='c4'>详细</a></td>
-</tr>
-
-<tr id='ft4_1' class='none'>
-    <td class='failCase'><div class='testcase'>test_测试接口4</div></td>
-    <td colspan='5' align='center'>
-    <!--默认收起output信息 -Findyou
-    <button id='btn_ft4_1' type="button"  class="btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_1'>失败</button>
-    <div id='div_ft4_1' class="collapse">  -->
-    <!-- 默认展开output信息 -Findyou -->
-    <button id='btn_ft4_1' type="button"  class="btn-xs" data-toggle="collapse" data-target='#div_ft4_1'>失败</button>
-    <div id='div_ft4_1' class="collapse in">
-    <pre>
-    
-ft4_1: Traceback (most recent call last):
-  File "/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/TestPlatform_User/templates/File/test_测试接口4.py", line 12, in test_测试接口4
-    self.assertEqual(200,res.status_code,'失败')
-AssertionError: 200 != 404 : 失败
-
-
-    </pre>
-    </div>
-    </td>
-</tr>
-
 <tr id='total_row' class="text-center info">
     <td>总计</td>
-    <td>4</td>
     <td>1</td>
-    <td>3</td>
     <td>0</td>
-    <td>通过率：25.00%</td>
+    <td>1</td>
+    <td>0</td>
+    <td>通过率：0.00%</td>
 </tr>
 </table>
 

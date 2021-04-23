@@ -332,21 +332,32 @@ def Pj_UploadExcel(request):
             logger.error('上传文件类型错误！')
             return render(request, 'Page/Interface_List.html', {'message': '导入失败'})
 
-
+def SendEmail(request):
+    return render(request,'Page/Send_Email.html')
 # 邮件发送方法
-def SendMail(title, msg, receivers):
+def SendMail(request):
+    to = request.POST.get('to')
+    cc = request.POST.get('cc')
+    subject = request.POST.get('subject')
+    contents = request.POST.get('contents')
     yag = yagmail.SMTP(
         host='smtp.qq.com', user='469687182@qq.com',
-        password='ppbdsowziqnlbhha', smtp_ssl=True
+        password='ppbdsowziqnlbhha', smtp_ssl=True  # 如果用的是qq邮箱或者你们公司的邮箱使用是安全协议的话，必须写上 smtp_ssl=True
     )
 
     try:
-        yag.send(receivers, title, msg)
+        yag.send(
+            to=to,
+            cc=cc,
+            subject=subject,
+            contents=contents,
+            attachments=r'/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/report/TestReport.html',
+        )
         print("邮件发送成功！")
 
     except BaseException as e:
-        print(e)
         print("Error: 发送邮件失败！")
+    return render(request,'Page/Send_Email.html')
 
 
 def Edit_Project(request):
@@ -440,9 +451,8 @@ def Report(request):
     runner.run(allcase())
     fp.close()
     # 生成报告后删除对应文件
-    files = os.listdir(test_dir)
-    for i,name in enumerate(files):  #逐个遍历
-        if name.find(".py")>=0 :    #判断文件名称中是否包含py字符
-            os.remove(test_dir+name)    # 删除操作
+    files = os.listdir(test_dir)  # 返回文件夹下的文件列表
+    for i, name in enumerate(files):  # 逐个遍历
+        if name.find(".py") >= 0:  # 判断文件名称中是否包含py字符
+            os.remove(test_dir + name)  # 删除操作
     return render(request, 'Page/Perform_Result.html')
-

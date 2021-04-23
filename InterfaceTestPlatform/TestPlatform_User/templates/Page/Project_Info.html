@@ -79,8 +79,7 @@
         <script type="text/html" id="toolbar">
             <a class="layui-btn layui-btn-xs" lay-event="perform"
                href="{%url 'TestPlatform_User:Interface_Perform'%}">执行</a>
-            <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="edit"
-               href="{%url 'TestPlatform_User:Edit_Project'%}">修改</a>
+            <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="edit">修改</a>
             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
         </script>
     </div>
@@ -288,7 +287,7 @@
                     layer.close(index);
                 });
             } else if (obj.event === 'edit') {
-                layer.alert('编辑行：<br>' + JSON.stringify(data))
+                layer.msg('双击表格可进行修改信息!');
             } else if (obj.event === 'perform') {  //选中一条数据点击执行，使用sessionStorage存储数据
                 var storage = window.sessionStorage;
                 storage['in_url'] = data.in_url;

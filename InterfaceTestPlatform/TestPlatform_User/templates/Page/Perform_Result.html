@@ -64,6 +64,9 @@
             <button type="button" class="layui-btn layui-btn" id="batchDelete" data-type="getCheckData"
                     style="float: right; margin-right: 20px"><i class="layui-icon">&#xe663; </i>生成报告
             </button>
+            <button type="button" class="layui-btn layui-btn" id="sendEmail" data-type="sendEmail"
+                    style="float: right; margin-right: 20px"><i class="layui-icon">&#xe609;</i>发送邮件
+            </button>
         </div>
 
         <!--</form>-->
@@ -180,13 +183,31 @@
                             traditional: true,
                             async: false,
                         });
+                        layer.msg("正在生成请稍后！");
                         window.location.reload();
 
                     });
                 }
             }
         };
+        layui.use(['layer', "jquery"], function () {
+            var
+                layer = layui.layer //弹层
+                , $ = layui.jquery;
+            $('#sendEmail').on("click", function () {
+                layer.open({
+                    title: '邮件配置',
+                    type: 2,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['460px', '550px'], //宽高
+                    fix: true,
+                    // btn: ['确认提交', '取消'],
+                    shadeClose: true,//点击旁边地方自动关闭
+                    content: "../SendEmail",
+                });
 
+            })
+        });
         $('.demoTable .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';

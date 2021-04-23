@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>新增项目</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/css/layui.css' %}">
+    <script src="{% static '/js/layui.js' %}"></script>
+</head>
+
+<body>
+<form class="layui-form" action="{%url 'TestPlatform_User:SendMail'%}" method="POST">
+    {%csrf_token%}
+    <div class="layui-form-item" style="margin-top: 30px;">
+        <label class="layui-form-label">收件人</label>
+        <div class="layui-input-inline">
+            <input type="text" name="to" lay-verify="required" placeholder="请输入收件人邮箱" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 30px;">
+        <label class="layui-form-label">抄送</label>
+        <div class="layui-input-inline">
+            <input type="text" name="cc" lay-verify="required" placeholder="请输入抄送人邮箱" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 30px;">
+        <label class="layui-form-label">邮件标题</label>
+        <div class="layui-input-inline">
+            <input type="text" width="auto" name="subject" lay-verify="required" placeholder="请输入邮件标题" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 30px;">
+        <label class="layui-form-label">邮件正文</label>
+        <div class="layui-input-inline">
+            <input type="text" width="auto" name="contents" lay-verify="required" placeholder="请输入邮件正文" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="padding-top: 20px; ">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1" onclick="closeSelf()">
+                发 送
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary">重 置</button>
+        </div>
+    </div>
+</form>
+<!--{% load static %}-->
+<!--<script src="{% static '/js/layui.js' %}" charset="utf-8"></script>-->
+<script type="text/javascript">
+    layui.use('form', function () {
+        var form = layui.form;
+        //刷新界面 所有元素
+        form.render();
+    });
+
+    function closeSelf() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+        window.parent.location.reload();
+    }
+
+</script>
+</body>
+</html>
