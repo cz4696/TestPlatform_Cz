@@ -269,6 +269,8 @@ def Update_Data_Pj(request):  # 修改项目信息
             models.Project_Data.objects.filter(id=id).update(pj_pname=value)
         elif field == 'pj_tname':
             models.Project_Data.objects.filter(id=id).update(pj_tname=value)
+        elif field == 'pj_pn':
+            models.Project_Data.objects.filter(id=id).update(pj_pn=value)
         else:
             models.Project_Data.objects.filter(id=id).update(pj_state=value)
         return render(request, 'Page/Interface_List.html')

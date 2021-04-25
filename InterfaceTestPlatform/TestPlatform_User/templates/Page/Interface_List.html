@@ -62,7 +62,8 @@
             <button type="button" class="layui-btn layui-btn-normal" id="addInterface" onclick="addInterface()"
                     style="float: right;margin-right: 20px"><i class="layui-icon">&#xe608;</i>新增用例
             </button>
-            <button type="button" class="layui-btn layui-btn-primary layui-border-green" id="batchPerform" data-type="batchPerform"
+            <button type="button" class="layui-btn layui-btn-primary layui-border-green" id="batchPerform"
+                    data-type="batchPerform"
                     style="float: right; margin-right: 20px"><i class="layui-icon">&#xe605;</i>批量执行
             </button>
         </div>
@@ -76,10 +77,10 @@
 
         <table class="layui-hide layui-table" id="table_data" lay-filter="table_data"></table>
         <script type="text/html" id="toolbar">
-            <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="edit"
-               >修改</a>
             <a class="layui-btn layui-btn-xs" lay-event="perform"
                href="{%url 'TestPlatform_User:Interface_Perform'%}">执行</a>
+            <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="edit"
+            >修改</a>
             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
         </script>
     </div>
@@ -108,9 +109,9 @@
             var value = obj.value //得到修改后的值
                 , data = obj.data //得到所在行所有键值
                 , field = obj.field; //得到字段
-            layer.confirm('确定将信息修改为：' + value,{
+            layer.confirm('确定将信息修改为：' + value, {
                 btn: ['确定', '取消']
-            }, function(index) {
+            }, function (index) {
                 $.ajax({
                     type: 'post',
                     url: "{%url 'TestPlatform_User:Update_Data_If'%}",
@@ -124,7 +125,7 @@
                 });
                 // window.location.reload();
                 layer.close(index);
-            },function () {
+            }, function () {
                 window.location.reload();
                 layer.close(index);
             })
@@ -135,7 +136,7 @@
             , page: true			//分页设置
             , limit: 20		//默认每一页显示数量
             , limits: [10, 20, 30, 40, 50]		//可选择每页显示的数量
-            , toolbar:true      // 开启打印等功能
+            , toolbar: true      // 开启打印等功能
             , cols: [[			//表格列
                 {type: 'checkbox', sort: false}
                 , {field: 'in_id', title: 'ID', align: 'center', width: 70, sort: true, edit: 'int'}
@@ -205,7 +206,7 @@
                     });
                 }
             }
-            ,batchPerform: function () {
+            , batchPerform: function () {
                 var checkStatus = table.checkStatus('testReload')
                     , data = checkStatus.data;
                 var arr = JSON.stringify(data);

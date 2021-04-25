@@ -54,7 +54,7 @@
     <!--<div style="margin-left: 200px;">-->
     <div style="padding: 20px; background-color: #F2F2F2;">
         <div class=" demoTable ">
-            <button type="button" class="layui-btn layui-btn" id="batchDelete" data-type="getCheckData"
+            <button type="button" class="layui-btn layui-btn"  data-type="getCheckData"
                     style="float: right; margin-right: 20px"><i class="layui-icon">&#xe663; </i>生成报告
             </button>
             <button type="button" class="layui-btn layui-btn" id="sendEmail" data-type="sendEmail"
@@ -168,7 +168,9 @@
                 if (data.length === 0){
                     layer.msg('请选择需要生成报告的数据！')
                 }else {
-                    layer.confirm('是否将选中的' + data.length + '条数据生成报告', function (index) {
+                    layer.confirm('是否将选中的' + data.length + '条数据生成报告',{
+                        btn : ['生成','取消']
+                    },function (index) {
                         $.ajax({
                             type: 'post',
                             url: "{%url 'TestPlatform_User:Report'%}",
@@ -176,10 +178,19 @@
                             traditional: true,
                             async: false,
                         });
-                        layer.msg("正在生成请稍后！");
-                        window.location.reload();
+                        layer.msg("已生成!", {
+                            icon: 1,
+                            time: 3000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            //do something
+                            layer.close(index);
+                            // window.location.reload();
+                        });
+                    }, function (index) {
+                    window.location.reload();
+                    layer.close(index);
+                })
 
-                    });
                 }
             }
         };
@@ -192,7 +203,7 @@
                     title: '邮件配置',
                     type: 2,
                     skin: 'layui-layer-rim', //加上边框
-                    area: ['460px', '550px'], //宽高
+                    area: ['450px', '510px'], //宽高
                     fix: true,
                     // btn: ['确认提交', '取消'],
                     shadeClose: true,//点击旁边地方自动关闭

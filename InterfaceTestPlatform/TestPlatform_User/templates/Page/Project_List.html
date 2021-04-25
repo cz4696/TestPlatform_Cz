@@ -14,13 +14,6 @@
     <div class="layui-header header header-demo" style="background-color: #393D49">
         <div class="layui-main">
             <ul class="layui-nav">
-                <!--<button style="background-color: #393D49;margin-left: -27px" type="button"-->
-                <!--class="layui-btn layui-btn-normal"><i-->
-                <!--class="layui-icon"></i></button>-->
-                <!--<button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i-->
-                <!--class="layui-icon"></i></button>-->
-                <!--<button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i-->
-                <!--class="layui-icon"></i></button>-->
                 <button style="background-color: #393D49;margin-left: -20px;" type="button"
                         class="layui-btn layui-btn-normal"><i
                         class="layui-icon"></i></button>
@@ -73,9 +66,9 @@
         <table class="layui-hide" id="table_data" lay-filter="table_data"></table>
         <script type="text/html" id="toolbar">
             <a class="layui-btn layui-btn-xs" lay-event="add"
-               href="{%url 'TestPlatform_User:Project_Info' %}">添加接口</a>
+               href="{%url 'TestPlatform_User:Project_Info' %}">添加</a>
             <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="perform"
-               href="">生成报告</a>
+               >修改</a>
             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
         </script>
     </div>
@@ -125,7 +118,9 @@
             var value = obj.value //得到修改后的值
                 , data = obj.data //得到所在行所有键值
                 , field = obj.field; //得到字段
-            layer.confirm('确定将信息修改为：' + value, function (index) {
+            layer.confirm('确定将信息修改为：' + value,{
+                btn: ['确定', '取消']
+            }, function(index) {
                 $.ajax({
                     type: 'post',
                     url: "{%url 'TestPlatform_User:Update_Data_Pj'%}",
@@ -137,9 +132,12 @@
                     error: function (result) {
                     }
                 });
-                // obj.update();
+                // window.location.reload();
                 layer.close(index);
-            });
+            },function () {
+                window.location.reload();
+                layer.close(index);
+            })
         });
 
         table.render({
@@ -275,8 +273,8 @@
                 });
                 var storage = window.sessionStorage;
                 storage['id'] = data.id;
-            } else if (obj.event === 'perform') {  //选中一条数据点击执行，使用sessionStorage存储数据
-
+            } else if (obj.event === 'perform') {
+                layer.msg('双击单元格试试！')
             }
         });
     });

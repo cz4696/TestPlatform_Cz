@@ -13,38 +13,39 @@
     {%csrf_token%}
     <div class="layui-form-item" style="margin-top: 30px;">
         <label class="layui-form-label">收件人</label>
-        <div class="layui-input-inline">
+        <div class="layui-input-inline" style="margin-right: 25px">
             <input type="text" name="to" lay-verify="required" placeholder="请输入收件人邮箱" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="margin-top: 30px;">
         <label class="layui-form-label">抄送</label>
-        <div class="layui-input-inline">
+        <div class="layui-input-inline" style="margin-right: 25px">
             <input type="text" name="cc" lay-verify="required" placeholder="请输入抄送人邮箱" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="margin-top: 30px;">
         <label class="layui-form-label">邮件标题</label>
-        <div class="layui-input-inline">
+        <div class="layui-input-inline" style="margin-right: 25px">
             <input type="text" width="auto" name="subject" lay-verify="required" placeholder="请输入邮件标题" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item" style="margin-top: 30px;">
         <label class="layui-form-label">邮件正文</label>
-        <div class="layui-input-inline">
-            <input type="text" width="auto" name="contents" lay-verify="required" placeholder="请输入邮件正文" autocomplete="off"
-                   class="layui-input">
+        <div class="layui-input-inline" style="margin-right: 25px">
+            <textarea id='in_data' width="auto" name="contents" lay-verify="required" placeholder="请输入邮件正文" class="layui-textarea" autocomplete="off" ></textarea>
+            <!--<input type="text" width="auto" name="contents" lay-verify="required" placeholder="请输入邮件正文" autocomplete="off"-->
+                   <!--class="layui-input">-->
         </div>
     </div>
     <div class="layui-form-item" style="padding-top: 20px; ">
         <div class="layui-input-block">
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1" onclick="closeSelf()">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1" onclick="closeSelf()" style="margin-left: 20px">
                 发 送
             </button>
-            <button type="reset" class="layui-btn layui-btn-primary">重 置</button>
+            <button type="reset" class="layui-btn layui-btn-primary" style="margin-left: 60px">重 置</button>
         </div>
     </div>
 </form>
@@ -59,8 +60,16 @@
 
     function closeSelf() {
         var index = parent.layer.getFrameIndex(window.name);
-        parent.layer.close(index);
-        window.parent.location.reload();
+        layer.msg("邮件发送成功!", {
+            icon: 6,
+            time: 3000 //2秒关闭（如果不配置，默认是3秒）
+        }, function(){
+            //do something
+            parent.layer.close(index);
+            window.parent.location.reload();
+            // window.location.reload();
+        });
+
     }
 
 </script>

@@ -47,7 +47,9 @@
     </div>
     <div style="padding: 30px; background-color: #F2F2F2;">
         <div class="layui-upload demoTable ">
-            <button type="button" class="layui-btn" id="upload" name="file" style="margin-bottom: 7px"><i class="layui-icon"></i>上传用例</button>
+            <button type="button" class="layui-btn" id="upload" name="file" style="margin-bottom: 7px"><i
+                    class="layui-icon"></i>上传用例
+            </button>
             <button type="button" class="layui-btn layui-btn-danger" id="batchDelete" data-type="getCheckData"
                     style="float: right; margin-right: 20px">批量删除
             </button>
@@ -63,7 +65,8 @@
         <div class="demoTable" style="margin-top: -38px; margin-left: 100px">
             <div class="layui-inline ">
                 <input type="text" class="layui-input" name="id" placeholder="输入关键字"
-                       title="可根据id进行搜索" id="demoReload" autocomplete="off" style="margin-left: 50px;margin-bottom: 2px">
+                       title="可根据id进行搜索" id="demoReload" autocomplete="off"
+                       style="margin-left: 50px;margin-bottom: 2px">
             </div>
             <button class="layui-btn" data-type="reload" style="margin-left: 50px;">搜索</button>
         </div>
@@ -101,7 +104,9 @@
             var value = obj.value //得到修改后的值
                 , data = obj.data //得到所在行所有键值
                 , field = obj.field; //得到字段
-            layer.confirm('确定将信息修改为：' + value, function (index) {
+            layer.confirm('确定将信息修改为：' + value, {
+                btn: ['确定', '取消']
+            }, function (index) {
                 $.ajax({
                     type: 'post',
                     url: "{%url 'TestPlatform_User:Update_Data_If'%}",
@@ -113,9 +118,12 @@
                     error: function (result) {
                     }
                 });
-                // obj.update();
+                // window.location.reload();
                 layer.close(index);
-            });
+            }, function () {
+                window.location.reload();
+                layer.close(index);
+            })
         });
 
         table.render({
@@ -124,7 +132,7 @@
             , page: true			//分页设置
             , limit: 20		//默认每一页显示数量
             , limits: [10, 20, 30, 40, 50]		//可选择每页显示的数量
-            , toolbar:true
+            , toolbar: true
             , cols: [[			//表格列
                 {type: 'checkbox', sort: false}
                 , {field: 'in_id', title: 'ID', align: 'center', width: 70, sort: true, edit: 'int'}
@@ -280,7 +288,7 @@
                     layer.close(index);
                 });
             } else if (obj.event === 'edit') {
-                layer.msg('双击表格可进行修改信息!');
+                layer.msg('双击单元格试试!');
             } else if (obj.event === 'perform') {  //选中一条数据点击执行，使用sessionStorage存储数据
                 var storage = window.sessionStorage;
                 storage['in_url'] = data.in_url;
@@ -291,9 +299,6 @@
             }
         });
     });
-    // var storage = window.sessionStorage;
-    // pj_name = storage.pj_name;
-    // document.getElementById("pj_name").value = pj_name;
 
 </script>
 </body>
