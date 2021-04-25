@@ -3,7 +3,7 @@ import sys
 import unittest
 import requests
 
-class test_${ClassName}(unittest.TestCase):
+class TestCase_Get(unittest.TestCase):
     def setUp(self):
         pass
 

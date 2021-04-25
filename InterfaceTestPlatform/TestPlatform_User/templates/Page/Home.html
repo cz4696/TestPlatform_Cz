@@ -8,40 +8,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="{% static '/css/layui.css' %}">
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header header header-demo" style="background-color: #393D49">
         <div class="layui-main">
             <ul class="layui-nav">
-                <!--<button style="background-color: #393D49;margin-left: -27px" type="button"-->
-                <!--class="layui-btn layui-btn-normal"><i-->
-                <!--class="layui-icon"></i></button>-->
-                <!--<button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i-->
-                <!--class="layui-icon"></i></button>-->
-                <!--<button style="background-color: #393D49" type="button" class="layui-btn layui-btn-normal"><i-->
-                <!--class="layui-icon"></i></button>-->
                 <button style="background-color: #393D49;margin-left: -20px;" type="button"
                         class="layui-btn layui-btn-normal"><i
                         class="layui-icon"></i></button>
                 <li class="layui-nav-item"><a href="{%url 'TestPlatform_User:Home'%}"><h1>TestPlatform</h1></a></li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">项目管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>
-                        <dd><a href="{%url 'TestPlatform_User:Project_Info'%}">项目信息</a></dd>
-                    </dl>
+                    <a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">接口管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a></dd>
-                        <dd><a href="{%url 'TestPlatform_User:Interface_Perform'%}">接口执行</a></dd>
-                        <dd><a href="/">批量接口</a></dd>
-                    </dl>
+                    <a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="{%url 'TestPlatform_User:Interface_Perform'%}">快速执行</a>
                 </li>
                 <li class="layui-nav-item"><a href="">测试报告</a></li>
                 <li class="layui-nav-item"><a href="">邮件配置</a></li>
-                <li class="layui-nav-item"><a href="">权限管理</a></li>
                 <li class="layui-nav-item" style="float: right">
                     <a href="javascript:;">{{ user.get_username }}</a>
                     <dl class="layui-nav-child">
@@ -63,96 +50,67 @@
              class="layui-card-body">
         </div>
         <div class="layui-row layui-col-space15">
-            <div class="layui-col-md6">
+            <div class="layui-col-md6" style="width: 100%">
                 <div class="layui-card">
-                    <div class="layui-card-header">我的项目</div>
-                    <div class="layui-card-body">
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                    </div>
+                    <div class="layui-card-header">用例执行情况</div>
+                    <div id="charts" style="height: 700px;width: 100%"></div>
                 </div>
             </div>
-            <div class="layui-col-md6">
-                <div class="layui-card">
-                    <div class="layui-card-header">内容面板</div>
-                    <div class="layui-card-body">
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-col-md12">
-                <div class="layui-card">
-                    <div class="layui-card-header">页面</div>
-                    <div class="layui-card-body">
-                        待定
-                    </div>
-                </div>
-            </div>
-            <div class="layui-col-md6">
-                <div class="layui-card">
-                    <div class="layui-card-header">内容面板</div>
-                    <div class="layui-card-body">
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-col-md6">
-                <div class="layui-card">
-                    <div class="layui-card-header">内容面板</div>
-                    <div class="layui-card-body">
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                    </div>
-                </div>
-
-            </div>
-            <div class="layui-col-md6">
-                <div class="layui-card">
-                    <div class="layui-card-header">内容面板</div>
-                    <div class="layui-card-body">
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                    </div>
-                </div>
-
-            </div>
+            <!--<div class="layui-col-md6">-->
+                <!--<div class="layui-card">-->
+                    <!--<div class="layui-card-header">项目总览</div>-->
+                    <!--<div id="main" style="height: 500px;width: 500px"></div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="layui-col-md6">-->
+                <!--<div class="layui-card">-->
+                    <!--<div class="layui-card-header">流程图</div>-->
+                    <!--<div class="layui-card-body">-->
+                        <!--<br>-->
+                        <!--<br>-->
+                        <!--<br>-->
+                        <!--<br>-->
+                        <!--<br>-->
+                        <!--<br>-->
+                        <!--<br>-->
+                        <!--<br>-->
+                        <!--<br>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="layui-col-md12">-->
+                <!--<div class="layui-card">-->
+                    <!--<div class="layui-card-header">页面</div>-->
+                    <!--<div class="layui-card-body">-->
+                        <!--待定-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="layui-col-md6">-->
+                <!--<div class="layui-card">-->
+                    <!--<div class="layui-card-body" id="bar_div3"-->
+                         <!--style="width: 500px;height:400px;display: inline-block"></div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="layui-col-md6">-->
+                <!--<div class="layui-card" style="height: 400px">-->
+                    <!--<div class="layui-card-body" id="bar_div1"-->
+                         <!--style="width: 300px;height:400px;display: inline-block"></div>-->
+                    <!--<div class="layui-card-body" id="bar_div2"-->
+                         <!--style="width: 300px;height:400px;display: inline-block"></div>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
 </div>
-
+<div id="pj_name" style="display:none">{{pjNameList}}</div>
+<div id="pj_inter_num" style="display:none">{{pj_interface_num}}</div>
+<div id="result" style="display:none">{{result}}</div>
 
 {% load static %}
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.0.2/echarts.common.js"></script>
 <script src="{% static '/js/layui.js' %}" charset="utf-8"></script>
-
 <script type="text/javascript">
     layui.use('element', function () {
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
@@ -208,6 +166,335 @@
     }
 
     setInterval("time()", 1000);
+
+
+</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.0.2/echarts.common.js"></script>
+
+<!--<script>-->
+    <!--var chart = echarts.init(document.getElementById('bar_div1'));-->
+    <!--var option = {-->
+        <!--title: {-->
+            <!--text: '项目状态'-->
+        <!--},-->
+        <!--tooltip: {},-->
+        <!--legend: {-->
+            <!--data: ['项目状态']-->
+        <!--},-->
+        <!--xAxis: {-->
+            <!--data: ["未开始", "进行中", "已结束"]-->
+        <!--},-->
+        <!--yAxis: {},-->
+        <!--series: [{-->
+            <!--name: '销量',-->
+            <!--type: 'bar',-->
+            <!--data: [5, 10, 20]-->
+        <!--}]-->
+    <!--};-->
+
+    <!--// 使用刚指定的配置项和数据显示图表。-->
+    <!--chart.setOption(option);-->
+
+<!--</script>-->
+<!--<script>-->
+    <!--var myChart = echarts.init(document.getElementById('bar_div2'));-->
+    <!--// 指定图表的配置项和数据-->
+    <!--var option = {-->
+        <!--series: [-->
+            <!--{-->
+                <!--name: '访问来源',-->
+                <!--type: 'pie',-->
+                <!--radius: '55%',-->
+                <!--data: [-->
+                    <!--{value: 235, name: '1'},-->
+                    <!--{value: 274, name: '2'},-->
+                    <!--{value: 310, name: '3'},-->
+                    <!--{value: 335, name: '4'},-->
+                    <!--{value: 400, name: '5'}-->
+                <!--],-->
+                <!--roseType: 'angle',-->
+                <!--itemStyle: {-->
+                    <!--normal: {-->
+                        <!--shadowBlur: 200,-->
+                        <!--shadowColor: 'rgba(0, 0, 0, 0.5)'-->
+                    <!--}-->
+                <!--}-->
+            <!--}-->
+        <!--]-->
+    <!--};-->
+
+    <!--// 使用刚指定的配置项和数据显示图表。-->
+    <!--myChart.setOption(option);-->
+<!--</script>-->
+<!--<script>-->
+    <!--var myChart = echarts.init(document.getElementById('main'));-->
+
+    <!--// 指定图表的配置项和数据-->
+    <!--var option = {-->
+        <!--legend: {},-->
+        <!--tooltip: {},-->
+        <!--dataset: {-->
+            <!--source: [-->
+                <!--['product', '2012', '2013', '2014', '2015'],-->
+                <!--['Matcha Latte', 41.1, 30.4, 65.1, 53.3],-->
+                <!--['Milk Tea', 86.5, 92.1, 85.7, 83.1],-->
+                <!--['Cheese Cocoa', 24.1, 67.2, 79.5, 86.4]-->
+            <!--]-->
+        <!--},-->
+        <!--xAxis: [-->
+            <!--{type: 'category', gridIndex: 0},-->
+            <!--{type: 'category', gridIndex: 1}-->
+        <!--],-->
+        <!--yAxis: [-->
+            <!--{gridIndex: 0},-->
+            <!--{gridIndex: 1}-->
+        <!--],-->
+        <!--grid: [-->
+            <!--{bottom: '55%'},-->
+            <!--{top: '55%'}-->
+        <!--],-->
+        <!--series: [-->
+            <!--// 这几个系列会在第一个直角坐标系中，每个系列对应到 dataset 的每一行。-->
+            <!--{type: 'bar', seriesLayoutBy: 'row'},-->
+            <!--{type: 'bar', seriesLayoutBy: 'row'},-->
+            <!--{type: 'bar', seriesLayoutBy: 'row'},-->
+            <!--// 这几个系列会在第二个直角坐标系中，每个系列对应到 dataset 的每一列。-->
+            <!--{type: 'bar', xAxisIndex: 1, yAxisIndex: 1},-->
+            <!--{type: 'bar', xAxisIndex: 1, yAxisIndex: 1},-->
+            <!--{type: 'bar', xAxisIndex: 1, yAxisIndex: 1},-->
+            <!--{type: 'bar', xAxisIndex: 1, yAxisIndex: 1}-->
+        <!--]-->
+    <!--};-->
+
+    <!--// 使用刚指定的配置项和数据显示图表。-->
+    <!--myChart.setOption(option);-->
+<!--</script>-->
+<script>
+    var js_data_str = document.getElementById('pj_name').innerText;  // 获取隐藏div下的内容
+    var js_data_ob = eval(js_data_str);     // 将string类型转换成object类型才能被识别
+    var pj_inter_num_str = document.getElementById('pj_inter_num').innerText;
+    var pj_inter_num_ob = eval(pj_inter_num_str);
+    var result_str = document.getElementById('result').innerText;
+    var result_ob = eval(result_str);
+    let barMax = Math.max.apply(null, result_ob);
+    let lineMax = Math.max.apply(null, result_ob.concat(result_ob));
+    barMax = barMax % 5 === 0 ? barMax : (5 - barMax % 5) + barMax;
+    lineMax = lineMax % 5 === 0 ? lineMax : (5 - lineMax % 5) + lineMax;
+    var myChart = echarts.init(document.getElementById('charts'));
+    var option = {
+        title: {
+            text: '项目-用例执行情况图表',
+            show: false
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                magicType: {
+                    show: true,
+                    type: ['pie', 'funnel']
+                },
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        legend: {
+            itemHeight: 6,
+            icon: 'circle',
+            textStyle: {
+                fontSize: 12,
+                color: '#7F8FA4',
+                backgroundColor: 'transparent',
+                borderWidth: 0
+            },
+            borderWidth: 0,
+            data: ['需求吞吐量', '需求平均交付周期']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        tooltip: {
+            trigger: 'axis',
+            backgroundColor: 'rgba(255,255,255,.95)',
+            textStyle: {
+                fontSize: 12,
+                lineHeight: 20,
+                color: '#354052'
+            },
+            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow',        // 默认为直线，可选为：'line' | 'shadow'
+                shadowStyle: {
+                    color: {
+                        type: 'linear',
+                        x: 0,
+                        y: 0,
+                        x2: 1,
+                        y2: 1,
+                        colorStops: [{  // 设置坐标轴hover状态时的背景色
+                            offset: 0, color: 'rgba(131, 176, 255, 0)' // 0% 处的颜色
+                        }, {
+                            offset: 1, color: 'rgba(63, 128, 242, .2)' // 100% 处的颜色
+                        }],
+                        global: false // 缺省为 false
+                    }
+                }
+            },
+            padding: [8, 16],
+            extraCssText: 'box-shadow: 0 6px 16px 0px rgba(0,0,0,.08)'
+        },
+
+        xAxis: [
+            {
+                type: 'category',
+                data: js_data_ob,
+                boundaryGap: true, // x轴左右是否留空白
+                axisPointer: {
+                    type: 'shadow',
+                },
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#d2d2d2'
+                    }
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#d2d2d2',
+                    }
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                minInterval: 1,
+                min: 0,
+                max: barMax > 5 ? barMax : 5,
+                interval: barMax / 5, // 两个y轴，让左右两个y轴的线重叠显示，动态计算interval
+                axisLine: {
+                    show: false,
+                    lineStyle: {
+                        color: '#F0F2F5',
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    formatter: '{value}条',
+                    textStyle: {
+                        color: '#d2d2d2'
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        width: 1,
+                        color: '#F0F2F5',
+                    }
+                }
+            },
+            {
+                type: 'value',
+                min: 0,
+                max: lineMax > 5 ? lineMax : 5,
+                interval: lineMax / 5,
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    formatter: '{value}条',
+                    textStyle: {
+                        color: '#d2d2d2'
+                    }
+                },
+                splitLine: {show: false}
+            }
+        ],
+        series: [{
+            name: '柱状图',
+            type: 'bar',
+            barWidth: 20,
+            itemStyle: {
+                normal: {color: '#3F80F2'}
+            },
+            label: {
+                normal: {
+                    show: true,
+                    position: 'right',
+                    textStyle: {
+                        fontSize: 12,
+                        color: '#7F8FA4'
+                    }
+                }
+            },
+            data: pj_inter_num_ob
+        }, {
+            name: '折线图',
+            type: 'line',
+            symbol: 'circle',
+            symbolSize: 10, // 折线图拐点大小
+            itemStyle: {
+                color: '#05B3A4',
+                borderColor: '#fff',
+                borderWidth: 2
+            },
+            emphasis: { // 拐点hover状态样式
+                itemStyle: {
+                    color: {
+                        type: 'radial',
+                        x: .5,
+                        y: .5,
+                        r: .5,
+                        colorStops: [{
+                            offset: 0,
+                            color: '#05B3A4'
+                        }, {
+                            offset: .35,
+                            color: '#05B3A4'
+                        }, {
+                            offset: .5,
+                            color: '#fff'
+                        }, {
+                            offset: 0,
+                            color: 'rgba(5,179,164,.3)'
+                        }],
+                        global: false
+                    },
+                    borderColor: 'rgba(5,179,164,.3)',
+                    borderWidth: 3
+                }
+            },
+            label: {
+                normal: {
+                    show: true,
+                    position: 'top',
+                    textStyle: {
+                        fontSize: 12,
+                        textBorderColor: '#fff',
+                        textBorderWidth: 3,
+                        color: '#7F8FA4'
+                    }
+                }
+            },
+            lineStyle: {
+                width: 3,
+                color: '#05B3A4',
+                shadowColor: 'rgba(63, 128, 242, .5)',
+                shadowBlur: 8,
+                shadowOffsetY: 4
+            },
+            yAxisIndex: 1,
+            data: result_ob
+        }]
+    };
+    myChart.setOption(option);
 </script>
 </body>
 </html>

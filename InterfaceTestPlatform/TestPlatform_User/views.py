@@ -3,20 +3,27 @@ from string import Template
 from venv import logger
 import yagmail
 from django.db import transaction
+from django.db.models import F
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login, logout  # 从app导入
 from django.contrib.auth.forms import UserCreationForm  # 自带创建用户表单，注册
 import xlrd, xlwt, json, sys
 import requests
-from idna import unicode
 from . import models
 from .models import Project_Data, Interface_Data
 import datetime, time
 import unittest
-import time
 import os
 from . import HTMLTestRunnerCN
+from jinja2 import Environment, FileSystemLoader
+from pyecharts.globals import CurrentConfig
+
+CurrentConfig.GLOBAL_ENV = Environment(loader=FileSystemLoader(
+    "/Users/caozheng/Library/Preferences/PyCharm2018.3/TestPlatform_Cz/InterfaceTestPlatform/templates"))
+from pyecharts import options as opts
+from pyecharts.charts import Bar
+from django.http import JsonResponse
 
 
 # from .test_case import suite
@@ -24,7 +31,23 @@ from . import HTMLTestRunnerCN
 
 # Create your views here.
 def Home(request):  # 首页
-    return render(request, 'Page/Home.html')
+    pj_name = models.Project_Data.objects.all().values()
+    interface_num = models.Interface_Data.objects.all().values()
+    pjNameList = []
+    pj_id_num = []
+    pj_interface_num = []
+    result = []
+    for i in pj_name:
+        for key1, value1 in i.items():
+            if key1 == 'pj_name':
+                pjNameList.append(value1)
+            if key1 == 'id':
+                pj_id_num.append(value1)
+    for j in pj_id_num:  # 判断项目id和接口status对应的有多少条用例
+        pj_interface_num.append(models.Interface_Data.objects.filter(status=j).count())
+        result.append(models.Interface_Data.objects.filter(status=j, in_expected_result=F('in_actual_result')).count())
+    return render(request, 'Page/Home.html',
+                  {'pjNameList': pjNameList, 'pj_interface_num': pj_interface_num, 'result': result})
 
 
 def Login(request):  # 登录功能
@@ -332,8 +355,11 @@ def Pj_UploadExcel(request):
             logger.error('上传文件类型错误！')
             return render(request, 'Page/Interface_List.html', {'message': '导入失败'})
 
+
 def SendEmail(request):
-    return render(request,'Page/Send_Email.html')
+    return render(request, 'Page/Send_Email.html')
+
+
 # 邮件发送方法
 def SendMail(request):
     to = request.POST.get('to')
@@ -357,7 +383,7 @@ def SendMail(request):
 
     except BaseException as e:
         print("Error: 发送邮件失败！")
-    return render(request,'Page/Send_Email.html')
+    return render(request, 'Page/Send_Email.html')
 
 
 def Edit_Project(request):
@@ -447,7 +473,7 @@ def Report(request):
 
     fp = open(filepath, 'wb')
     # 定义测试报告的标题与描述
-    runner = HTMLTestRunnerCN.HTMLTestReportCN(stream=fp, title=u'测试报告', description=u'测试报告描述')
+    runner = HTMLTestRunnerCN.HTMLTestReportCN(stream=fp, title=u'接口测试报告')  # description=u'接口测试报告描述'
     runner.run(allcase())
     fp.close()
     # 生成报告后删除对应文件

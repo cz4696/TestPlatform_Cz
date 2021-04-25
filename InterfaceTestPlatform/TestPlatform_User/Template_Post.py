@@ -4,7 +4,7 @@ import unittest
 import requests
 import json
 
-class test_${ClassName}(unittest.TestCase):
+class TestCase_Post(unittest.TestCase):
     def setUp(self):
         pass
 

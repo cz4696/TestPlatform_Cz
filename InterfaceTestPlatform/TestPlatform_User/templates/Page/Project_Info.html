@@ -20,22 +20,15 @@
                         class="layui-icon"></i></button>
                 <li class="layui-nav-item"><a href="{%url 'TestPlatform_User:Home'%}"><h1>TestPlatform</h1></a></li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">项目管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a></dd>
-                        <dd><a href="{%url 'TestPlatform_User:Project_Info'%}">项目信息</a></dd>
-                    </dl>
+                    <a href="{%url 'TestPlatform_User:Project_List'%}">项目列表</a>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">接口管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a></dd>
-                        <dd><a href="{%url 'TestPlatform_User:Interface_Perform'%}">接口执行</a></dd>
-                        <dd><a href="/">批量接口</a></dd>
-                    </dl>
+                    <a href="{%url 'TestPlatform_User:Interface_List'%}">接口列表</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="{%url 'TestPlatform_User:Interface_Perform'%}">快速执行</a>
                 </li>
                 <li class="layui-nav-item"><a href="">测试报告</a></li>
                 <li class="layui-nav-item"><a href="">邮件配置</a></li>
-                <li class="layui-nav-item"><a href="">权限管理</a></li>
                 <li class="layui-nav-item" style="float: right">
                     <a href="javascript:;">{{ user.get_username }}</a>
                     <dl class="layui-nav-child">

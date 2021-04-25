@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.urls import path, include
 from . import views
+from django.contrib import admin
 
 app_name = 'TestPlatform_User'  # 声明app
 urlpatterns = [

@@ -126,3 +126,4 @@ STATICFILES_DIRS = [
     ("font", os.path.join(STATIC_ROOT, 'font')),
 
 ]
+
