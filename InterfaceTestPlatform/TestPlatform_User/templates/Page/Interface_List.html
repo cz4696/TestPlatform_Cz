@@ -77,7 +77,7 @@
         <table class="layui-hide layui-table" id="table_data" lay-filter="table_data"></table>
         <script type="text/html" id="toolbar">
             <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="edit"
-               href="{%url 'TestPlatform_User:Edit_Project'%}">修改</a>
+               >修改</a>
             <a class="layui-btn layui-btn-xs" lay-event="perform"
                href="{%url 'TestPlatform_User:Interface_Perform'%}">执行</a>
             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
@@ -108,7 +108,9 @@
             var value = obj.value //得到修改后的值
                 , data = obj.data //得到所在行所有键值
                 , field = obj.field; //得到字段
-            layer.confirm('确定将信息修改为：' + value, function (index) {
+            layer.confirm('确定将信息修改为：' + value,{
+                btn: ['确定', '取消']
+            }, function(index) {
                 $.ajax({
                     type: 'post',
                     url: "{%url 'TestPlatform_User:Update_Data_If'%}",
@@ -120,9 +122,12 @@
                     error: function (result) {
                     }
                 });
-                // obj.update();
+                // window.location.reload();
                 layer.close(index);
-            });
+            },function () {
+                window.location.reload();
+                layer.close(index);
+            })
         });
         table.render({
             elem: '#table_data'	//表单ID
@@ -275,7 +280,7 @@
                     layer.close(index);
                 });
             } else if (obj.event === 'edit') {
-                layer.alert('编辑行：<br>' + JSON.stringify(data))
+                layer.msg('双击单元格试试！')
             } else if (obj.event === 'perform') {  //选中一条数据点击执行，使用sessionStorage存储数据
                 var storage = window.sessionStorage;
                 storage['in_url'] = data.in_url;
