@@ -38,8 +38,8 @@
                 <li class="layui-nav-item" style="float: right">
                     <a href="javascript:;">{{ user.get_username }}</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="">个人中心</a></dd>
-                        <dd><a href="{%url 'TestPlatform_User:Logout'%}">登出</a></dd>
+                        <dd><a href="{%url 'TestPlatform_User:Logout'%}"><i
+                                class="layui-icon">&#xe64d; </i>登出</a></dd>
                     </dl>
                 </li>
                 <li style="margin:12px;float: right">
@@ -199,7 +199,7 @@
                 layer = layui.layer //弹层
                 , $ = layui.jquery;
             $('#sendEmail').on("click", function () {
-                layer.open({
+                var index = layer.open({
                     title: '邮件配置',
                     type: 2,
                     skin: 'layui-layer-rim', //加上边框
@@ -208,6 +208,17 @@
                     // btn: ['确认提交', '取消'],
                     shadeClose: true,//点击旁边地方自动关闭
                     content: "../SendEmail",
+                    // success:function (result) {
+                    //     var index = parent.layer.getFrameIndex(window.name);
+                    //     if (result==="true") {
+                    //         layer.msg("邮件发送成功!", {
+                    //             icon: 6,
+                    //             time: 4000 //4秒关闭（如果不配置，默认是3秒）
+                    //         },function () {
+                    //             parent.layer.close(index);
+                    //         });
+                    //     }
+                    // }
                 });
 
             })

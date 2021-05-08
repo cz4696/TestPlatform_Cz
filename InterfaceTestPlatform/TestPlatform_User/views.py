@@ -321,14 +321,14 @@ def Pj_UploadExcel(request):
     if request.method == 'POST':
         f = request.FILES.get('file')
         excel_type = f.name.split('.')[1]
-        if excel_type in ['xlsx', 'xls']:
+        if excel_type in ['xlsx', 'xls']:   # 判断格式
             # 开始解析上传的excel表格
-            wb = xlrd.open_workbook(filename=None, file_contents=f.read())
-            table = wb.sheets()[0]
+            wb = xlrd.open_workbook(filename=None, file_contents=f.read())  # 打开指定路径下的excel
+            table = wb.sheets()[0]  # 获取表中第一个sheet页
             rows = table.nrows  # 总行数
             data_list = []  # 获取表中数据
             try:
-                for i in range(rows):
+                for i in range(rows):   # 遍历每一行数据，将这些数据存储到Interface_Data数据库表中
                     if i != 0:
                         data_list.append(table.row_values(i))
                         in_id = data_list[i - 1][0]
@@ -352,7 +352,6 @@ def Pj_UploadExcel(request):
             except:
                 logger.error('解析excel文件或者数据插入错误')
             return HttpResponse(json.dumps(data_list), {'message': '导入成功'})
-            # return render(request, 'Page/Interface_List.html', {'message': '导入成功'})
         else:
             logger.error('上传文件类型错误！')
             return render(request, 'Page/Interface_List.html', {'message': '导入失败'})

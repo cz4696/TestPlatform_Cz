@@ -31,8 +31,8 @@
                 <li class="layui-nav-item" style="float: right">
                     <a href="javascript:;">{{ user.get_username }}</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="">个人中心</a></dd>
-                        <dd><a href="{%url 'TestPlatform_User:Logout'%}">登出</a></dd>
+                        <dd><a href="{%url 'TestPlatform_User:Logout'%}"><i
+                                class="layui-icon">&#xe64d; </i>登出</a></dd>
                     </dl>
                 </li>
                 <li style="margin:12px;float: right">
@@ -50,7 +50,7 @@
             <button id="add_project" class="layui-btn" type="button" data-method="notice">新 增
             </button>
             <button type="button" class="layui-btn layui-btn-danger" id="batchDelete" data-type="getCheckData"
-                    style="float: right; margin-right: 20px">批量删除
+                    style="float: right; margin-right: 20px"><i class="layui-icon">&#xe640;</i>批量删除
             </button>
         </div>
         <div class="demoTable" style="margin-top: -38px; margin-left: 100px">
@@ -154,7 +154,7 @@
                 , {field: 'pj_pname', title: '项目经理', align: 'center', width: 250, sort: false, edit: 'text'}
                 , {field: 'pj_pn', title: '产品经理', align: 'center', width: 250, sort: false, edit: 'text'}
                 , {field: 'pj_tname', title: '测试人员',align: 'center', width: 250, sort: false, edit: 'text'}
-                , {field: 'pj_state', title: '状态', align: 'center', width: 250, sort: true}
+                , {field: 'pj_state', title: '状态', align: 'center', width: 250, sort: true,edit: 'text'}
                 , {field: 'dobar', title: '操作', align: 'center', width:323,sort: false, toolbar: '#toolbar'}
             ]]
             , response: {

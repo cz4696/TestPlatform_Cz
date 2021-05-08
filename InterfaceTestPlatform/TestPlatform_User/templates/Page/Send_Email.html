@@ -62,14 +62,9 @@
         var index = parent.layer.getFrameIndex(window.name);
         layer.msg("邮件发送成功!", {
             icon: 6,
-            time: 3000 //2秒关闭（如果不配置，默认是3秒）
-        }, function(){
-            //do something
-            parent.layer.close(index);
-            window.parent.location.reload();
-            // window.location.reload();
+            time: 4000 //4秒关闭（如果不配置，默认是3秒）
         });
-
+        parent.layer.close(index);
     }
 
 </script>

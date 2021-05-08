@@ -32,8 +32,8 @@
                 <li class="layui-nav-item" style="float: right">
                     <a href="javascript:;">{{ user.get_username }}</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="">个人中心</a></dd>
-                        <dd><a href="{%url 'TestPlatform_User:Logout'%}">登出</a></dd>
+                        <dd><a href="{%url 'TestPlatform_User:Logout'%}"><i
+                                class="layui-icon">&#xe64d; </i>登出</a></dd>
                     </dl>
                 </li>
                 <li style="margin:12px;float: right">
@@ -51,11 +51,11 @@
                     class="layui-icon"></i>上传用例
             </button>
             <button type="button" class="layui-btn layui-btn-danger" id="batchDelete" data-type="getCheckData"
-                    style="float: right; margin-right: 20px">批量删除
+                    style="float: right; margin-right: 20px"><i class="layui-icon">&#xe640;</i>批量删除
             </button>
-            <button type="button" class="layui-btn layui-btn-warm" id="addInterface"
-                    style="float: right;margin-right: 20px">新增用例
-            </button>
+            <!--<button type="button" class="layui-btn layui-btn-warm" id="addInterface"-->
+                    <!--style="float: right;margin-right: 20px">新增用例-->
+            <!--</button>-->
             <button type="button" class="layui-btn layui-btn-primary layui-border-green" id="batchPerform"
                     data-type="batchPerform"
                     style="float: right; margin-right: 20px"><i class="layui-icon">&#xe605;</i>批量执行
