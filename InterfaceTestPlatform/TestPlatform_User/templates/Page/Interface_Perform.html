@@ -164,19 +164,20 @@
         if ('{{actual_result}}' !== '') {
             // $("#sub").click(function () {
             //配置一个透明的询问框
-            layer.open({
-                type: 1,
-                title: '执行结果',
-                content: '   ' + '{{state}}',
-                btn: ['哦'],
-                area: ['200px', '150px'],
-                time: 200000,
-                closeBtn: "1",
-                // layer.msg('{{state}}', {
-                //     time: 20000, //20s后自动关闭
-                //     btn: ['明白了', '知道了', '哦']
-                // });
-            })
+            // layer.open({
+            //     type: 1,
+            //     title: '执行结果',
+            //     content: '   ' + '{{state}}',
+            //     btn: ['哦'],
+            //     area: ['200px', '150px'],
+            //     time: 200000,
+            //     closeBtn: "1",
+            // });
+                layer.msg('{{state}}', {
+                    time: 20000, //20s后自动关闭
+                    btn: ['哦']
+                });
+
             // });
         }
     });

@@ -19,7 +19,7 @@ class Interface_Data(models.Model):
     in_id = models.IntegerField()
     in_mname = models.CharField(max_length=10)
     in_type = models.CharField(max_length=8)
-    in_url = models.CharField(max_length=50)
+    in_url = models.CharField(max_length=100)
     in_data_type = models.CharField(max_length=8)
     in_data = models.CharField(max_length=50)
     in_tname = models.CharField(max_length=10)
